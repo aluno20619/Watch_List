@@ -37,19 +37,22 @@ namespace Watch_List.Models
         [MaxLength(150, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
         [Url]
         public string Trailer { get; set; }
-		
-		
 
-//***********************************************************************
-      // definição do atributo que será utilizado para exprimir o relacionamento:
-	  
-      // com os objetos da classe Genero
+
+
+        //***********************************************************************
+        // definição do atributo que será utilizado para exprimir o relacionamento:
+
+        // com os objetos da classe Genero
+        [Display(Name = "Lista de géneros")]
         public ICollection<Genero> ListaDeGeneros { get; set; }
-		
-		// com os objetos da classe Elenco
+
+        // com os objetos da classe Elenco
+        [Display(Name = "Lista de elenco")]
         public ICollection<Elenco> ListaDeElencos { get; set; }
-		
-		// com os objetos da classe intermédia Util_Fil
+
+        // com os objetos da classe intermédia Util_Fil
+        [Display(Name = "Lista de utilizadores")]
         public ICollection<Util_Fil> ListaDeUtilizadores { get; set; }
     }
 }

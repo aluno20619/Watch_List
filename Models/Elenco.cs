@@ -32,14 +32,15 @@ namespace Watch_List.Models
         [StringLength(50, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
         public string Nome { get; set; }
 
-        [MaxLength(100, ErrorMessage = "A {0} não pode ter mais de {1} caracteres."))]
+        [MaxLength(100, ErrorMessage = "A {0} não pode ter mais de {1} caracteres.")]
         [FileExtensions]
         public string Foto { get; set; }
 
 
-	  //***********************************************************************
-      // definição do atributo que será utilizado para exprimir o relacionamento 
-      // com os objetos da classe Filme
+        //***********************************************************************
+        // definição do atributo que será utilizado para exprimir o relacionamento 
+        // com os objetos da classe Filme
+        [Display(Name = "Lista de filmes")]
         public ICollection<Filme> ListaDeFilmes { get; set; }
     }
 }

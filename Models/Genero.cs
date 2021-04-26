@@ -6,23 +6,27 @@ using System.Threading.Tasks;
 
 namespace Watch_List.Models
 {
+    
     public class Genero
     {
+
         public Genero() {
 
             ListaDeFilmes = new HashSet<Filme>();
         }
 
         [Key]
-        [MaxLength(20, ErrorMessage = "O {0} não pode ter mais de {1} caracteres."))]
+        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+        [MaxLength(20, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
         [Display(Name ="Género")]
         public string Nome { get; set; }
-		
-		
-		
-	  //***********************************************************************
-      // definição do atributo que será utilizado para exprimir o relacionamento
-      // com os objetos da classe Filme
+
+
+
+        //***********************************************************************
+        // definição do atributo que será utilizado para exprimir o relacionamento
+        // com os objetos da classe Filme
+        [Display(Name = "Lista de filmes")]
         public ICollection<Filme> ListaDeFilmes { get; set; }
     }
 }
