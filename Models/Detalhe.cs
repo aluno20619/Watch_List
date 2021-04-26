@@ -22,7 +22,7 @@ namespace Watch_List.Models
 
         public DateTime DataInic { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(50, ErrorMessage = "O {0} não pode ter mais de {1} caracteres."))]
         public string Premio { get; set; }
 
 

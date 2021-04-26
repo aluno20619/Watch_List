@@ -14,12 +14,13 @@ namespace Watch_List.Models
         }
 
         [Key]
-        [MaxLength(20)]
+        [MaxLength(20, ErrorMessage = "O {0} não pode ter mais de {1} caracteres."))]
+        [Display(Name ="Género")]
         public string Nome { get; set; }
 		
 		
 		
-		//***********************************************************************
+	  //***********************************************************************
       // definição do atributo que será utilizado para exprimir o relacionamento
       // com os objetos da classe Filme
         public ICollection<Filme> ListaDeFilmes { get; set; }

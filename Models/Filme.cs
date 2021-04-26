@@ -18,19 +18,23 @@ namespace Watch_List.Models
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(100)]
+        
+        [Required(ErrorMessage ="É obrigatório preenchero  {0]")]
+        [StringLength(100, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
+        [Display(Name="Título")]
         public string Titulo { get; set; }
 
-        [MaxLength(4)]
+        [MaxLength(4, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
         public int Ano { get; set; }
 
+        [StringLength(10000, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
         public string Resumo { get; set; }
 
-        [MaxLength(100)]
+        [MaxLength(100, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
         [FileExtensions]
         public string Poster { get; set; }
 
-        [MaxLength(150)]
+        [MaxLength(150, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
         [Url]
         public string Trailer { get; set; }
 		
