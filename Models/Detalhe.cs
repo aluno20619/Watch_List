@@ -30,23 +30,23 @@ namespace Watch_List.Models
 
 
 
-	  //***********************************************************************
-      // definição da chave forasteira (FK) que referencia a classe Filme
-      //***********************************************************************
-       [ForeignKey(nameof(MelhorFil))]
+        //***********************************************************************
+        // definição da chave forasteira (FK) que referencia a classe Filme
+        //***********************************************************************
+        [ForeignKey(nameof(MelhorFil))]
         [Display(Name = "Melhor Filme")]
         public int MelhorFilFK { get; set; }
         public Filme MelhorFil { get; set; }
 
 
-      //***********************************************************************
-      // definição da chave forasteira (FK) que referencia a classe Elenco
-      //***********************************************************************
+        //***********************************************************************
+        // definição da chave forasteira (FK) que referencia a classe Elenco
+        //***********************************************************************
         [ForeignKey(nameof(ElencoId))]
         [Display(Name = "Elenco do Filme")]
-        public int ElencoIdFK { get; set; }
+        public int ElencoFK { get; set; }
         public Elenco ElencoId { get; set; }
-        
-        
+
+
     }
 }

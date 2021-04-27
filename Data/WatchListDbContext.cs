@@ -2,16 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Watch_List.Models;
 
 namespace Watch_List.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class WatchListDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public WatchListDbContext(DbContextOptions<WatchListDbContext> options)
             : base(options)
-        {}
+        { }
         public DbSet<Util_Fil> Util_Fil { get; set; }
         public DbSet<Detalhe> Detalhe { get; set; }
         public DbSet<Elenco> Elenco { get; set; }
@@ -30,7 +31,7 @@ namespace Watch_List.Data
             modelBuilder.Remove<PluralizingTableNameConvention>();  // impede a EF de 'pluralizar' os nomes das tabelas
              modelBuilder.Remove<OneToManyCascadeDeleteConvention>();  // força a que a chave forasteira não tenha a propriedade 'on delete cascade'
              modelBuilder.Entity.Remove<ManyToManyCascadeDeleteConvention>();  // força a que a chave forasteira não tenha a propriedade 'on delete cascade'
- */
+            */
             base.OnModelCreating(modelBuilder);
 
         }

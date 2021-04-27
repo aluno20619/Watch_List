@@ -4,13 +4,17 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
+/// <summary>
+/// Géneros dos filmes
+/// </summary>
 namespace Watch_List.Models
 {
-    
+
     public class Genero
     {
 
-        public Genero() {
+        public Genero()
+        {
 
             ListaDeFilmes = new HashSet<Filme>();
         }
@@ -18,7 +22,7 @@ namespace Watch_List.Models
         [Key]
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
         [MaxLength(20, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
-        [Display(Name ="Género")]
+        [Display(Name = "Género")]
         public string Nome { get; set; }
 
 

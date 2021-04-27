@@ -12,7 +12,8 @@ namespace Watch_List.Models
     /// </summary>
     public class Elenco
     {
-        public Elenco() {
+        public Elenco()
+        {
 
             ListaDeFilmes = new HashSet<Filme>();
         }
@@ -20,10 +21,10 @@ namespace Watch_List.Models
         [Key]
         public int Id { get; set; }
 
-        
-        
+
+
         [StringLength(100, ErrorMessage = "A {0} não pode ter mais de {1} caracteres.")]
-        [Display (Name ="Profissão")]
+        [Display(Name = "Profissão")]
         public string Profissao { get; set; }
 
 
@@ -33,7 +34,7 @@ namespace Watch_List.Models
         public string Nome { get; set; }
 
         [MaxLength(100, ErrorMessage = "A {0} não pode ter mais de {1} caracteres.")]
-        [FileExtensions]
+        [FileExtensions(ErrorMessage = "A extensão da {0} não é válida.")]
         public string Foto { get; set; }
 
 

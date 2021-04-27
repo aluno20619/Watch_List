@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
+/// <summary>
+/// Destalhes dos filmes
+/// </summary>
 namespace Watch_List.Models
 {
     public class Filme
@@ -18,10 +22,10 @@ namespace Watch_List.Models
         [Key]
         public int Id { get; set; }
 
-        
-        [Required(ErrorMessage ="É obrigatório preenchero  {0]")]
+
+        [Required(ErrorMessage = "É obrigatório preenchero  {0]")]
         [StringLength(100, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
-        [Display(Name="Título")]
+        [Display(Name = "Título")]
         public string Titulo { get; set; }
 
         [MaxLength(4, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
@@ -31,11 +35,11 @@ namespace Watch_List.Models
         public string Resumo { get; set; }
 
         [MaxLength(100, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
-        [FileExtensions]
+        [FileExtensions(ErrorMessage = "A extensão do {0} não é válida.")]
         public string Poster { get; set; }
 
         [MaxLength(150, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
-        [Url]
+        [Url(ErrorMessage = "O link do {0} não é válido.")]
         public string Trailer { get; set; }
 
 
