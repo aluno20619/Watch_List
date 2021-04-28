@@ -12,16 +12,14 @@ namespace Watch_List.Models
     /// </summary>
     public class Profissao
     {
-        //***********************************************************************
-        /// <summary>
-        /// definição da chave forasteira (FK) que referencia a classe PessoaFilme
-        /// </summary>
-        //***********************************************************************
-        [ForeignKey(nameof(Tarefa))]
-        [Display(Name = "Profissão")]
         [Key]
-        public int TarefaFK { get; set; }
+        public int Id { get; set; }
 
-        public PessoaFilme Tarefa { get; set; }
+        /// <summary>
+        /// Profissão desempenhada por uma pessoa num filme
+        /// </summary>
+        [StringLength(100, ErrorMessage = "A {0} não pode ter mais de {1} caracteres.")]
+        [Display(Name = "Profissão")]
+        public string Tarefa { get; set; }
     }
 }

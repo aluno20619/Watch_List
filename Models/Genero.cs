@@ -19,10 +19,13 @@ namespace Watch_List.Models
             ListaDeFilmes = new HashSet<Filme>();
         }
 
+        [Key]
+        public int Id { get; set; }
+
         /// <summary>
         /// Nome do género
         /// </summary>
-        [Key]
+        
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
         [MaxLength(20, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
         [Display(Name = "Género")]

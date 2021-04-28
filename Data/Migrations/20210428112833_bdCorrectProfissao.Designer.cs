@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Watch_List.Data;
 
 namespace Watch_List.Data.Migrations
 {
     [DbContext(typeof(WatchListDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210428112833_bdCorrectProfissao")]
+    partial class bdCorrectProfissao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,12 +26,12 @@ namespace Watch_List.Data.Migrations
                     b.Property<int>("ListaDeFilmesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ListaDeGenerosId")
-                        .HasColumnType("int");
+                    b.Property<string>("ListaDeGenerosNome")
+                        .HasColumnType("nvarchar(20)");
 
-                    b.HasKey("ListaDeFilmesId", "ListaDeGenerosId");
+                    b.HasKey("ListaDeFilmesId", "ListaDeGenerosNome");
 
-                    b.HasIndex("ListaDeGenerosId");
+                    b.HasIndex("ListaDeGenerosNome");
 
                     b.ToTable("FilmeGenero");
                 });
@@ -269,17 +271,11 @@ namespace Watch_List.Data.Migrations
 
             modelBuilder.Entity("Watch_List.Models.Genero", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Nome");
 
                     b.ToTable("Genero");
                 });
@@ -340,8 +336,8 @@ namespace Watch_List.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("TarefaFK")
-                        .HasColumnType("int");
+                    b.Property<string>("TarefaFK")
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -356,16 +352,11 @@ namespace Watch_List.Data.Migrations
 
             modelBuilder.Entity("Watch_List.Models.Profissao", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<string>("Tarefa")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Tarefa");
 
                     b.ToTable("Profissao");
                 });
@@ -404,7 +395,7 @@ namespace Watch_List.Data.Migrations
 
                     b.HasOne("Watch_List.Models.Genero", null)
                         .WithMany()
-                        .HasForeignKey("ListaDeGenerosId")
+                        .HasForeignKey("ListaDeGenerosNome")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -485,8 +476,7 @@ namespace Watch_List.Data.Migrations
                     b.HasOne("Watch_List.Models.Profissao", "Tarefa")
                         .WithMany()
                         .HasForeignKey("TarefaFK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("MelhorFilme");
 
