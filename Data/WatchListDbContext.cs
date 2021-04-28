@@ -13,11 +13,14 @@ namespace Watch_List.Data
         public WatchListDbContext(DbContextOptions<WatchListDbContext> options)
             : base(options)
         { }
-        public DbSet<Util_Fil> Util_Fil { get; set; }
-        public DbSet<Detalhe> Detalhe { get; set; }
-        public DbSet<Elenco> Elenco { get; set; }
+        
+        public DbSet<PessoaFilme> PessoaFilme { get; set; }
+        public DbSet<Pessoa> Pessoa { get; set; }
         public DbSet<Filme> Filme { get; set; }
         public DbSet<Genero> Genero { get; set; }
+        public DbSet<Profissao> Profissao { get; set; }
+        public DbSet<UtilFilme> UtilFilme { get; set; }
+
 
 
 

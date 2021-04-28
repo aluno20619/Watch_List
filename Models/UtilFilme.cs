@@ -10,30 +10,34 @@ using System.ComponentModel.DataAnnotations;
 /// </summary>
 namespace Watch_List.Models
 {
-    public class Util_Fil
+    public class UtilFilme
     {
 
         [Key]
         public int Id { get; set; }
-
-        //O estado do filme (visto ou para ver)
+        
+        /// <summary>
+        /// O estado do filme (visto ou para ver)
+        /// </summary>
         [MaxLength(10, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
         public string Estado { get; set; }
 
+        //***********************************************************************
+        /// <summary>
+        /// definição da chave forasteira (FK) que referencia a classe Identity User
+        /// </summary>
+        //***********************************************************************
+        public string UtilIdFK { get; set; }
 
-
         //***********************************************************************
-        // definição da chave forasteira (FK) que referencia a classe Identity User
-        //***********************************************************************
-        // public int UtilIdFK { get; set; }
-
-        //***********************************************************************
-        // definição da chave forasteira (FK) que referencia a classe Filme
-        //***********************************************************************
-        [ForeignKey(nameof(FilId))]
+        /// <summary>
+        /// definição da chave forasteira (FK) que referencia a classe Filme
+        /// </summary>
+        /// //***********************************************************************
+        [ForeignKey(nameof(Filme))]
         [Display(Name = "Filmes")]
         public int FilFK { get; set; }
-        public Filme FilId { get; set; }
+        public Filme Filme { get; set; }
 
 
     }

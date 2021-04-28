@@ -19,6 +19,9 @@ namespace Watch_List.Models
             ListaDeFilmes = new HashSet<Filme>();
         }
 
+        /// <summary>
+        /// Nome do género
+        /// </summary>
         [Key]
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
         [MaxLength(20, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
@@ -28,8 +31,10 @@ namespace Watch_List.Models
 
 
         //***********************************************************************
-        // definição do atributo que será utilizado para exprimir o relacionamento
-        // com os objetos da classe Filme
+        /// <summary>
+        /// definição do atributo que será utilizado para exprimir o relacionamento com os objetos da classe Filme
+        /// </summary>
+        //***********************************************************************
         [Display(Name = "Lista de filmes")]
         public ICollection<Filme> ListaDeFilmes { get; set; }
     }
