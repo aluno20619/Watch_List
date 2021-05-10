@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Watch_List.Models.Genero>
+﻿@model IEnumerable<Watch_List.Models.Profissao>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Géneros</h1>
+<h1>Profissões</h1>
 
 <p>
     <a asp-action="Create">Criar Novo</a>
@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                @Html.DisplayNameFor(model => model.Tarefa)
             </th>
             <th></th>
         </tr>
@@ -22,7 +22,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Nome)
+                @Html.DisplayFor(modelItem => item.Tarefa)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
