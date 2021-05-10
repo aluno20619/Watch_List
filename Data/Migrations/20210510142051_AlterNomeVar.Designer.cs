@@ -10,8 +10,8 @@ using Watch_List.Data;
 namespace Watch_List.Data.Migrations
 {
     [DbContext(typeof(WatchListDbContext))]
-    [Migration("20210428113257_bdCorrectKeys")]
-    partial class bdCorrectKeys
+    [Migration("20210510142051_AlterNomeVar")]
+    partial class AlterNomeVar
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -332,7 +332,7 @@ namespace Watch_List.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MelhorFilmeFK")
+                    b.Property<int>("FilmeFK")
                         .HasColumnType("int");
 
                     b.Property<int>("PessoaFK")
@@ -342,16 +342,16 @@ namespace Watch_List.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("TarefaFK")
+                    b.Property<int>("ProfissaoFK")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MelhorFilmeFK");
+                    b.HasIndex("FilmeFK");
 
                     b.HasIndex("PessoaFK");
 
-                    b.HasIndex("TarefaFK");
+                    b.HasIndex("ProfissaoFK");
 
                     b.ToTable("PessoaFilme");
                 });
@@ -472,9 +472,9 @@ namespace Watch_List.Data.Migrations
 
             modelBuilder.Entity("Watch_List.Models.PessoaFilme", b =>
                 {
-                    b.HasOne("Watch_List.Models.Filme", "MelhorFilme")
+                    b.HasOne("Watch_List.Models.Filme", "Filme")
                         .WithMany()
-                        .HasForeignKey("MelhorFilmeFK")
+                        .HasForeignKey("FilmeFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -484,17 +484,17 @@ namespace Watch_List.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Watch_List.Models.Profissao", "Tarefa")
+                    b.HasOne("Watch_List.Models.Profissao", "Profissao")
                         .WithMany()
-                        .HasForeignKey("TarefaFK")
+                        .HasForeignKey("ProfissaoFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("MelhorFilme");
+                    b.Navigation("Filme");
 
                     b.Navigation("Pessoa");
 
-                    b.Navigation("Tarefa");
+                    b.Navigation("Profissao");
                 });
 
             modelBuilder.Entity("Watch_List.Models.UtilFilme", b =>

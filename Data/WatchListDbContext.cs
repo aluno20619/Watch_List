@@ -30,11 +30,7 @@ namespace Watch_List.Data
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
-            /*
-            modelBuilder.Remove<PluralizingTableNameConvention>();  // impede a EF de 'pluralizar' os nomes das tabelas
-             modelBuilder.Remove<OneToManyCascadeDeleteConvention>();  // força a que a chave forasteira não tenha a propriedade 'on delete cascade'
-             modelBuilder.Entity.Remove<ManyToManyCascadeDeleteConvention>();  // força a que a chave forasteira não tenha a propriedade 'on delete cascade'
-            */
+           
             base.OnModelCreating(modelBuilder);
 
         }

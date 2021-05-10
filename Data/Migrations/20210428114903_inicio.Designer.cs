@@ -10,8 +10,8 @@ using Watch_List.Data;
 namespace Watch_List.Data.Migrations
 {
     [DbContext(typeof(WatchListDbContext))]
-    [Migration("20210428102925_bdInicial")]
-    partial class bdInicial
+    [Migration("20210428114903_inicio")]
+    partial class inicio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,12 +26,12 @@ namespace Watch_List.Data.Migrations
                     b.Property<int>("ListaDeFilmesId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ListaDeGenerosNome")
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int>("ListaDeGenerosId")
+                        .HasColumnType("int");
 
-                    b.HasKey("ListaDeFilmesId", "ListaDeGenerosNome");
+                    b.HasKey("ListaDeFilmesId", "ListaDeGenerosId");
 
-                    b.HasIndex("ListaDeGenerosNome");
+                    b.HasIndex("ListaDeGenerosId");
 
                     b.ToTable("FilmeGenero");
                 });
@@ -271,11 +271,17 @@ namespace Watch_List.Data.Migrations
 
             modelBuilder.Entity("Watch_List.Models.Genero", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<string>("Nome")
+                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.HasKey("Nome");
+                    b.HasKey("Id");
 
                     b.ToTable("Genero");
                 });
@@ -326,7 +332,7 @@ namespace Watch_List.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MelhorFilmeFK")
+                    b.Property<int>("FilmeFK")
                         .HasColumnType("int");
 
                     b.Property<int>("PessoaFK")
@@ -336,25 +342,32 @@ namespace Watch_List.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Profissao")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<int>("TarefaFK")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MelhorFilmeFK");
+                    b.HasIndex("FilmeFK");
 
                     b.HasIndex("PessoaFK");
+
+                    b.HasIndex("TarefaFK");
 
                     b.ToTable("PessoaFilme");
                 });
 
             modelBuilder.Entity("Watch_List.Models.Profissao", b =>
                 {
-                    b.Property<int>("TarefaFK")
-                        .HasColumnType("int");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.HasKey("TarefaFK");
+                    b.Property<string>("Tarefa")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Profissao");
                 });
@@ -393,7 +406,7 @@ namespace Watch_List.Data.Migrations
 
                     b.HasOne("Watch_List.Models.Genero", null)
                         .WithMany()
-                        .HasForeignKey("ListaDeGenerosNome")
+                        .HasForeignKey("ListaDeGenerosId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -459,9 +472,9 @@ namespace Watch_List.Data.Migrations
 
             modelBuilder.Entity("Watch_List.Models.PessoaFilme", b =>
                 {
-                    b.HasOne("Watch_List.Models.Filme", "MelhorFilme")
+                    b.HasOne("Watch_List.Models.Filme", "Filme")
                         .WithMany()
-                        .HasForeignKey("MelhorFilmeFK")
+                        .HasForeignKey("FilmeFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -471,20 +484,17 @@ namespace Watch_List.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("MelhorFilme");
-
-                    b.Navigation("Pessoa");
-                });
-
-            modelBuilder.Entity("Watch_List.Models.Profissao", b =>
-                {
-                    b.HasOne("Watch_List.Models.PessoaFilme", "Tarefa")
+                    b.HasOne("Watch_List.Models.Profissao", "Profissao")
                         .WithMany()
                         .HasForeignKey("TarefaFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Tarefa");
+                    b.Navigation("Filme");
+
+                    b.Navigation("Pessoa");
+
+                    b.Navigation("Profissao");
                 });
 
             modelBuilder.Entity("Watch_List.Models.UtilFilme", b =>

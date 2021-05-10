@@ -30,22 +30,21 @@ namespace Watch_List.Models
         /// definição da chave forasteira (FK) que referencia a classe PessoaFilme
         /// </summary>
         //***********************************************************************
-        [ForeignKey(nameof(Tarefa))]
+        [ForeignKey(nameof(Profissao))]
         [Display(Name = "Profissão")]
-        public int TarefaFK { get; set; }
+        public int ProfissaoFK { get; set; }
+        public Profissao Profissao { get; set; }
 
-        public Profissao Tarefa { get; set; }
-    
 
-    //***********************************************************************
-    /// <summary>
-    /// definição da chave forasteira (FK) que referencia a classe Filme
-    /// </summary>
-    //***********************************************************************
-    [ForeignKey(nameof(MelhorFilme))]
-        [Display(Name = "Melhor Filme")]
-        public int MelhorFilmeFK { get; set; }
-        public Filme MelhorFilme { get; set; }
+        //***********************************************************************
+        /// <summary>
+        /// definição da chave forasteira (FK) que referencia a classe Filme
+        /// </summary>
+        //***********************************************************************
+        [ForeignKey(nameof(Filme))]
+        [Display(Name = "Filme")]
+        public int FilmeFK { get; set; }
+        public Filme Filme { get; set; }
 
         //***********************************************************************
         /// <summary>
