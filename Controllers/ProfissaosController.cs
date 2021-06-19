@@ -10,22 +10,22 @@ using Watch_List.Models;
 
 namespace Watch_List.Controllers
 {
-    public class ProfissoesController : Controller
+    public class ProfissaosController : Controller
     {
         private readonly WatchListDbContext _context;
 
-        public ProfissoesController(WatchListDbContext context)
+        public ProfissaosController(WatchListDbContext context)
         {
             _context = context;
         }
 
-        // GET: Profissoes
+        // GET: Profissaos
         public async Task<IActionResult> Index()
         {
             return View(await _context.Profissao.ToListAsync());
         }
 
-        // GET: Profissoes/Details/5
+        // GET: Profissaos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,13 +43,13 @@ namespace Watch_List.Controllers
             return View(profissao);
         }
 
-        // GET: Profissoes/Create
+        // GET: Profissaos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Profissoes/Create
+        // POST: Profissaos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -65,7 +65,7 @@ namespace Watch_List.Controllers
             return View(profissao);
         }
 
-        // GET: Profissoes/Edit/5
+        // GET: Profissaos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,7 +81,7 @@ namespace Watch_List.Controllers
             return View(profissao);
         }
 
-        // POST: Profissoes/Edit/5
+        // POST: Profissaos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -116,7 +116,7 @@ namespace Watch_List.Controllers
             return View(profissao);
         }
 
-        // GET: Profissoes/Delete/5
+        // GET: Profissaos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +134,7 @@ namespace Watch_List.Controllers
             return View(profissao);
         }
 
-        // POST: Profissoes/Delete/5
+        // POST: Profissaos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

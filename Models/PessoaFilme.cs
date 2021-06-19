@@ -23,18 +23,6 @@ namespace Watch_List.Models
         [Display(Name = "Prémio")]
         public string Premio { get; set; }
 
-        
-
-        //***********************************************************************
-        /// <summary>
-        /// definição da chave forasteira (FK) que referencia a classe PessoaFilme
-        /// </summary>
-        //***********************************************************************
-        [ForeignKey(nameof(Profissao))]
-        [Display(Name = "Profissão")]
-        public int ProfissaoFK { get; set; }
-        public Profissao Profissao { get; set; }
-
 
         //***********************************************************************
         /// <summary>

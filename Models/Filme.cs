@@ -16,8 +16,9 @@ namespace Watch_List.Models
         public Filme()
         {
             ListaDeGeneros = new HashSet<Genero>();
-            ListaDePessoas = new HashSet<Pessoa>();
+            ListaDePessoas = new HashSet<PessoaFilme>();
             ListaDeUtilizadores = new HashSet<UtilFilme>();
+          
         }
         [Key]
         public int Id { get; set; }
@@ -57,13 +58,14 @@ namespace Watch_List.Models
         public string Trailer { get; set; }
 
 
+        
 
         //***********************************************************************
         /// <summary>
         /// definição do atributo que será utilizado para exprimir o relacionamento com os objetos da classe Genero
         /// </summary>
         //***********************************************************************
-        [Display(Name = "Lista de géneros")]
+        [Display(Name = "Lista de Géneros")]
         public ICollection<Genero> ListaDeGeneros { get; set; }
 
         //***********************************************************************
@@ -72,14 +74,17 @@ namespace Watch_List.Models
         /// </summary>
         //***********************************************************************
         [Display(Name = "Lista de Pessoas")]
-        public ICollection<Pessoa> ListaDePessoas { get; set; }
+        public ICollection<PessoaFilme> ListaDePessoas { get; set; }
 
         //***********************************************************************
         /// <summary>
         /// definição do atributo que será utilizado para exprimir o relacionamento com os objetos da classe intermédia Util_Filme
         /// </summary>
         //***********************************************************************
-        [Display(Name = "Lista de utilizadores")]
+        [Display(Name = "Lista de Utilizadores")]
         public ICollection<UtilFilme> ListaDeUtilizadores { get; set; }
+
+       
+
     }
 }

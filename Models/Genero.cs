@@ -32,7 +32,6 @@ namespace Watch_List.Models
         public string Nome { get; set; }
 
 
-
         //***********************************************************************
         /// <summary>
         /// definição do atributo que será utilizado para exprimir o relacionamento com os objetos da classe Filme

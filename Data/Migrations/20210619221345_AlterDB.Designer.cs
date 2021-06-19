@@ -10,15 +10,15 @@ using Watch_List.Data;
 namespace Watch_List.Data.Migrations
 {
     [DbContext(typeof(WatchListDbContext))]
-    [Migration("20210510142051_AlterNomeVar")]
-    partial class AlterNomeVar
+    [Migration("20210619221345_AlterDB")]
+    partial class AlterDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("FilmeGenero", b =>
@@ -61,6 +61,29 @@ namespace Watch_List.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "m",
+                            ConcurrencyStamp = "656ac837-c164-480e-9579-7e2776dccfd4",
+                            Name = "Membro",
+                            NormalizedName = "MEMBRO"
+                        },
+                        new
+                        {
+                            Id = "f",
+                            ConcurrencyStamp = "9d473508-8ae9-43bc-86fe-7a8380210d50",
+                            Name = "Funcionario",
+                            NormalizedName = "FUNCIONARIO"
+                        },
+                        new
+                        {
+                            Id = "g",
+                            ConcurrencyStamp = "5875963b-6f7e-44b3-9443-77a18ffd1527",
+                            Name = "Gestor",
+                            NormalizedName = "GESTOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -302,9 +325,6 @@ namespace Watch_List.Data.Migrations
                     b.Property<DateTime>("DataObi")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("FilmeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Foto")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -318,9 +338,15 @@ namespace Watch_List.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("ProfissaoFK")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProfissoesId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("FilmeId");
+                    b.HasIndex("ProfissoesId");
 
                     b.ToTable("Pessoa");
                 });
@@ -342,7 +368,7 @@ namespace Watch_List.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("ProfissaoFK")
+                    b.Property<int?>("ProfissaoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -351,7 +377,7 @@ namespace Watch_List.Data.Migrations
 
                     b.HasIndex("PessoaFK");
 
-                    b.HasIndex("ProfissaoFK");
+                    b.HasIndex("ProfissaoId");
 
                     b.ToTable("PessoaFilme");
                 });
@@ -363,11 +389,16 @@ namespace Watch_List.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("PessoaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Tarefa")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PessoaId");
 
                     b.ToTable("Profissao");
                 });
@@ -416,7 +447,7 @@ namespace Watch_List.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -425,7 +456,7 @@ namespace Watch_List.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -434,7 +465,7 @@ namespace Watch_List.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -443,13 +474,13 @@ namespace Watch_List.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -458,22 +489,24 @@ namespace Watch_List.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Watch_List.Models.Pessoa", b =>
                 {
-                    b.HasOne("Watch_List.Models.Filme", null)
-                        .WithMany("ListaDePessoas")
-                        .HasForeignKey("FilmeId")
+                    b.HasOne("Watch_List.Models.Profissao", "Profissoes")
+                        .WithMany()
+                        .HasForeignKey("ProfissoesId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Profissoes");
                 });
 
             modelBuilder.Entity("Watch_List.Models.PessoaFilme", b =>
                 {
                     b.HasOne("Watch_List.Models.Filme", "Filme")
-                        .WithMany()
+                        .WithMany("ListaDePessoas")
                         .HasForeignKey("FilmeFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -484,17 +517,22 @@ namespace Watch_List.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Watch_List.Models.Profissao", "Profissao")
-                        .WithMany()
-                        .HasForeignKey("ProfissaoFK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasOne("Watch_List.Models.Profissao", null)
+                        .WithMany("ListaDePessoas")
+                        .HasForeignKey("ProfissaoId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Filme");
 
                     b.Navigation("Pessoa");
+                });
 
-                    b.Navigation("Profissao");
+            modelBuilder.Entity("Watch_List.Models.Profissao", b =>
+                {
+                    b.HasOne("Watch_List.Models.Pessoa", null)
+                        .WithMany("ListaDeProfissoes")
+                        .HasForeignKey("PessoaId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Watch_List.Models.UtilFilme", b =>
@@ -518,6 +556,13 @@ namespace Watch_List.Data.Migrations
             modelBuilder.Entity("Watch_List.Models.Pessoa", b =>
                 {
                     b.Navigation("ListaDeFilmes");
+
+                    b.Navigation("ListaDeProfissoes");
+                });
+
+            modelBuilder.Entity("Watch_List.Models.Profissao", b =>
+                {
+                    b.Navigation("ListaDePessoas");
                 });
 #pragma warning restore 612, 618
         }

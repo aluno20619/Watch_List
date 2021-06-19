@@ -16,6 +16,7 @@ namespace Watch_List.Models
         {
 
             ListaDeFilmes = new HashSet<PessoaFilme>();
+            ListaDeProfissoes = new HashSet<Profissao>();
         }
 
         /// <summary>
@@ -64,13 +65,31 @@ namespace Watch_List.Models
         public string Nacionalidade { get; set; }
 
 
+        //***********************************************************************
+        /// <summary>
+        /// definição da chave forasteira (FK) que referencia a classe Profissao
+        /// </summary>
+        //***********************************************************************
+        [ForeignKey(nameof(Profissao))]
+        [Display(Name = "Profissão")]
+        public int ProfissaoFK { get; set; }
+        public Profissao Profissoes { get; set; }
+
 
         //***********************************************************************
         /// <summary>
         /// definição do atributo que será utilizado para exprimir o relacionamento com os objetos da classe Filme
         /// </summary>
         //***********************************************************************
-        [Display(Name = "Lista de filmes")]
+        [Display(Name = "Lista de Filmes")]
         public ICollection<PessoaFilme> ListaDeFilmes { get; set; }
+
+        //***********************************************************************
+        /// <summary>
+        /// definição do atributo que será utilizado para exprimir o relacionamento com os objetos da classe Profissao
+        /// </summary>
+        //***********************************************************************
+        [Display(Name = "Lista de Profissões")]
+        public ICollection<Profissao> ListaDeProfissoes { get; set; }
     }
 }
