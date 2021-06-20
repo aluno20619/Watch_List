@@ -47,12 +47,14 @@ namespace Watch_List.Data
         /// <summary>
         /// Representa a BD
         /// </summary>
-        public DbSet<PessoaFilme> PessoaFilme { get; set; }
+        
         public DbSet<Pessoa> Pessoa { get; set; }
         public DbSet<Filme> Filme { get; set; }
         public DbSet<Genero> Genero { get; set; }
         public DbSet<Profissao> Profissao { get; set; }
         public DbSet<UtilFilme> UtilFilme { get; set; }
+        public DbSet<FilmeGenero> FilmeGenero { get; set; }
+        public DbSet<PessoaFilme> PessoaFilme { get; set; }
 
     }
 }

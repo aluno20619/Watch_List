@@ -16,7 +16,7 @@ namespace Watch_List.Models
         public Genero()
         {
 
-            ListaDeFilmes = new HashSet<Filme>();
+            ListaDeFilmes = new HashSet<FilmeGenero>();
         }
 
         [Key]
@@ -38,6 +38,6 @@ namespace Watch_List.Models
         /// </summary>
         //***********************************************************************
         [Display(Name = "Lista de filmes")]
-        public ICollection<Filme> ListaDeFilmes { get; set; }
+        public ICollection<FilmeGenero> ListaDeFilmes { get; set; }
     }
 }

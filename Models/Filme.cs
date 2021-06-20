@@ -15,7 +15,7 @@ namespace Watch_List.Models
     {
         public Filme()
         {
-            ListaDeGeneros = new HashSet<Genero>();
+            ListaDeGeneros = new HashSet<FilmeGenero>();
             ListaDePessoas = new HashSet<PessoaFilme>();
             ListaDeUtilizadores = new HashSet<UtilFilme>();
           
@@ -26,7 +26,7 @@ namespace Watch_List.Models
         /// <summary>
         /// Título do filme
         /// </summary>
-        [Required(ErrorMessage = "É obrigatório preenchero  {0]")]
+        [Required(ErrorMessage = "É obrigatório preencher o {0}")]
         [StringLength(100, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
         [Display(Name = "Título")]
         public string Titulo { get; set; }
@@ -66,7 +66,7 @@ namespace Watch_List.Models
         /// </summary>
         //***********************************************************************
         [Display(Name = "Lista de Géneros")]
-        public ICollection<Genero> ListaDeGeneros { get; set; }
+        public ICollection<FilmeGenero> ListaDeGeneros { get; set; }
 
         //***********************************************************************
         /// <summary>
