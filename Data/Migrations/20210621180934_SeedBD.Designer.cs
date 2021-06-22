@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Watch_List.Data;
 
 namespace Watch_List.Data.Migrations
 {
     [DbContext(typeof(WatchListDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210621180934_SeedBD")]
+    partial class SeedBD
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,21 +51,21 @@ namespace Watch_List.Data.Migrations
                         new
                         {
                             Id = "m",
-                            ConcurrencyStamp = "2c51d060-639e-4cba-81b0-1b5d3f1c44fd",
+                            ConcurrencyStamp = "59f71292-50e8-4528-880f-4048615a531c",
                             Name = "Membro",
                             NormalizedName = "MEMBRO"
                         },
                         new
                         {
                             Id = "f",
-                            ConcurrencyStamp = "7333b206-e8a2-468e-b6a7-75de2fd4c157",
+                            ConcurrencyStamp = "acbcd90b-80d4-46cf-bf53-2f5b4d0ac2d0",
                             Name = "Funcionario",
                             NormalizedName = "FUNCIONARIO"
                         },
                         new
                         {
                             Id = "g",
-                            ConcurrencyStamp = "a3c9ffe3-787a-4fbe-abd9-c5e087af68a3",
+                            ConcurrencyStamp = "9ea4ff35-b575-415f-adc4-bea154d432db",
                             Name = "Gestor",
                             NormalizedName = "GESTOR"
                         });
@@ -536,79 +538,14 @@ namespace Watch_List.Data.Migrations
                     b.Property<int>("FilFK")
                         .HasColumnType("int");
 
-                    b.Property<int>("UtilFK")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FilFK");
-
-                    b.HasIndex("UtilFK");
-
-                    b.ToTable("UtilFilme");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Estado = "Para ver",
-                            FilFK = 1,
-                            UtilFK = 4
-                        });
-                });
-
-            modelBuilder.Entity("Watch_List.Models.Utilizador", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
                     b.Property<string>("UtilIdFK")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Utilizador");
+                    b.HasIndex("FilFK");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "manuelbastos1234@gmail.com",
-                            Nome = "ManuelBastos",
-                            UtilIdFK = "GESTOR"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "mariaandrade89@sapo.pt",
-                            Nome = "MariaAndrade",
-                            UtilIdFK = "FUNCIONARIO"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Email = "Carolinasilva34@gmail.com",
-                            Nome = "CarolinaSilva",
-                            UtilIdFK = "FUNCIONARIO"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Email = "granady123@gmail.com",
-                            Nome = "granady123",
-                            UtilIdFK = "MEMBRO"
-                        });
+                    b.ToTable("UtilFilme");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -731,15 +668,7 @@ namespace Watch_List.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Watch_List.Models.Utilizador", "Utilizador")
-                        .WithMany("ListaDeFilmes")
-                        .HasForeignKey("UtilFK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Filme");
-
-                    b.Navigation("Utilizador");
                 });
 
             modelBuilder.Entity("Watch_List.Models.Filme", b =>
@@ -766,11 +695,6 @@ namespace Watch_List.Data.Migrations
             modelBuilder.Entity("Watch_List.Models.Profissao", b =>
                 {
                     b.Navigation("ListaDePessoas");
-                });
-
-            modelBuilder.Entity("Watch_List.Models.Utilizador", b =>
-                {
-                    b.Navigation("ListaDeFilmes");
                 });
 #pragma warning restore 612, 618
         }

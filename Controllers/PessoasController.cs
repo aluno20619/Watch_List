@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,21 +13,66 @@ using Watch_List.Models;
 
 namespace Watch_List.Controllers
 {
+    [Authorize]
     public class PessoasController : Controller
     {
+        /// <summary>
+        /// Representa a bd
+        /// </summary>
         private readonly WatchListDbContext _context;
 
-        public PessoasController(WatchListDbContext context)
+        /// <summary>
+        /// Atributo de dados da app web 
+        /// </summary>
+        private readonly IWebHostEnvironment _caminho;
+
+        /// <summary>
+        /// esta variável recolhe os dados da pessoa q se autenticou
+        /// </summary>
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public PessoasController(WatchListDbContext context, IWebHostEnvironment caminho, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _caminho = caminho;
+            _userManager = userManager;
         }
 
+        [AllowAnonymous]
+        /// <summary>
+        /// Mostra a lista de pessoas 
+        /// </summary>
+        /// <returns></returns>
         // GET: Pessoas
         public async Task<IActionResult> Index()
         {
+            // dados das fotos
+            var foto = await _context.Pessoa.Include(f => f.ProfissaoFK).ToListAsync();
+            
+            // variavel aux para obter o id da pessoa autenticada
+            string idPessoaAutenticada = _userManager.GetUserId(User);
+            
+
+            //Filmes assosciados a uma pessoa
+            //equivalente a: SELECT * FROM UtilFilme uf, Pessoa p, Profissoes t, Filme f, PessoaFilme pf WHERE p.ProfissaoFK = t.Id AND pf.PessoaFK = p.Id AND pf.FilmeFK = f.Id And u.UserName == idPessoaAutenticada
+            var filmes = await (from f in _context.Filme
+                                join pf in _context.PessoaFilme on f.Id equals pf.FilmeFK
+                                join p in _context.Pessoa on pf.PessoaFK equals p.Id
+                                join t in _context.Profissao on p.ProfissaoFK equals t.Id
+                                join uf in _context.UtilFilme on f.Id equals uf.FilFK
+                               // join u in _context. on uf equals uf.
+                               // where u.UtilIdFK == idPessoaAutenticada
+                              select f.Id).ToListAsync();
+
+            //INSERT VIEWMODEL
             return View(await _context.Pessoa.ToListAsync());
         }
 
+        /// <summary>
+        /// Mostra os detalhes de uma pessoa
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: Pessoas/Details/5
         public async Task<IActionResult> Details(int? id)
         {

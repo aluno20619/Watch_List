@@ -9,14 +9,14 @@ using Watch_List.Models;
 
 namespace Watch_List.Data
 {
-    //public class ApplicationUser : IdentityUser
-    //{
+    public class ApplicationUser : IdentityUser
+    {
 
-    //    /// <summary>
-    //    /// recolhe a data de registo de um utilizador
-    //    /// </summary>
-    //    public DateTime DataRegisto { get; set; }
-    //}
+        /// <summary>
+        /// recolhe a data de registo de um utilizador
+        /// </summary>
+        public DateTime DataRegisto { get; set; }
+    }
 
     public class WatchListDbContext : IdentityDbContext
     {
@@ -42,16 +42,66 @@ namespace Watch_List.Data
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            modelBuilder.Entity<Profissao>().HasData(
+                new Profissao { Id = 1, Tarefa = "Actor"},
+                new Profissao { Id = 2, Tarefa = "Realizador"},
+                new Profissao { Id = 3, Tarefa = "Diretor"},
+                new Profissao { Id = 4, Tarefa = "Produtor"}
+            );
+
+            modelBuilder.Entity<Pessoa>().HasData(
+                new Pessoa { Id = 1, Nome = "Emily Kathleen Anne Mortimer", Foto = "emilymortimer.jpg", DataNasc = new DateTime(1971, 10, 6), DataInic = new DateTime(1995, 4, 26), Nacionalidade = "Reino Unido", ProfissaoFK = 1 }
+            );
+
+            modelBuilder.Entity<Genero>().HasData(
+                new Genero { Id = 1, Nome = "Aventura" },
+                new Genero { Id = 2, Nome = "Ação" },
+                new Genero { Id = 3, Nome = "Comédia" },
+                new Genero { Id = 4, Nome = "Documentário" },
+                new Genero { Id = 5, Nome = "Drama" },
+                new Genero { Id = 6, Nome = "Fantasia" },
+                new Genero { Id = 7, Nome = "Romance" },
+                new Genero { Id = 8, Nome = "Suspense" },
+                new Genero { Id = 9, Nome = "Terror" },
+                new Genero { Id = 10, Nome = "SFI" }
+            );
+
+            modelBuilder.Entity<Utilizador>().HasData(
+                 new Utilizador { Id = 1, Nome = "ManuelBastos", Email = "manuelbastos1234@gmail.com", UtilIdFK ="GESTOR" },
+                 new Utilizador { Id = 2, Nome = "MariaAndrade", Email = "mariaandrade89@sapo.pt", UtilIdFK = "FUNCIONARIO" },
+                 new Utilizador { Id = 3, Nome = "CarolinaSilva", Email = "Carolinasilva34@gmail.com", UtilIdFK = "FUNCIONARIO" },
+                 new Utilizador { Id = 4, Nome = "granady123", Email = "granady123@gmail.com", UtilIdFK = "MEMBRO" }
+
+          );
+
+            modelBuilder.Entity<UtilFilme>().HasData(
+             new UtilFilme { Id = 1, FilFK = 1, UtilFK = 4, Estado = "Para ver" }
+           );
+
+            modelBuilder.Entity<Filme>().HasData(
+               new Filme {Id = 1, Titulo = "O Castelo Andante", Ano = 2004, Poster = "howlsmovingcastle.jpg", Resumo = "Sophie encontra um feiticeiro chamado Howl a caminho de visitar a sua irmã Lettie. Ao regressar a casa, a Bruxa do Nada aparece e transforma a numa mulher de noventa anos de idade. Em busca de quebrar a maldição, Sophie sai de casa e parte para o campo para encontrar o castelo andante que pertence ao Howl.", Trailer = "https://www.youtube.com/watch?v=iwROgK94zcM" }
+           );
+
+            modelBuilder.Entity<FilmeGenero>().HasData(
+              new FilmeGenero {Id = 1, FilmeFK = 1, GeneroFK = 6}
+            );
+
+            modelBuilder.Entity<PessoaFilme>().HasData(
+             new PessoaFilme {Id = 1, FilmeFK = 1, PessoaFK = 1}
+           );
+
         }
 
         /// <summary>
         /// Representa a BD
         /// </summary>
-        
-        public DbSet<Pessoa> Pessoa { get; set; }
-        public DbSet<Filme> Filme { get; set; }
-        public DbSet<Genero> Genero { get; set; }
+
         public DbSet<Profissao> Profissao { get; set; }
+        public DbSet<Pessoa> Pessoa { get; set; }  
+        public DbSet<Genero> Genero { get; set; }
+        public DbSet<Filme> Filme { get; set; }
+        public DbSet<Utilizador> Utilizador { get; set; }
         public DbSet<UtilFilme> UtilFilme { get; set; }
         public DbSet<FilmeGenero> FilmeGenero { get; set; }
         public DbSet<PessoaFilme> PessoaFilme { get; set; }

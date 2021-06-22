@@ -22,7 +22,7 @@ namespace Watch_List.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Profissão desempenhada por uma pessoa num filme
+        /// Profissão desempenhada por uma pessoa 
         /// </summary>
         [StringLength(100, ErrorMessage = "A {0} não pode ter mais de {1} caracteres.")]
         [Display(Name = "Profissão")]
