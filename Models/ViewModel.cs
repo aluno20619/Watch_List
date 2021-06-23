@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-    namespace Watch_List.Models {
+    
+namespace Watch_List.Models {
     /// <summary>
-    /// classe para permitir o transporte do Controller para a View, e vice-versa
-    /// irá transportar os dados das Fotografias e dos IDs do Cães que pertencem 
-    /// à pessoa autenticada
+    /// Permite o transporte de dados do Controller para a View, e vice-versa
     /// </summary>
+    
+
+
+
     public class PessoasOnFilmes
     {
 
         /// <summary>
-        /// lista de todas dos posters do filme
+        /// lista de profissoes que a pessoa tem
         /// </summary>
-        public ICollection<Pessoa> ListaDeFilmes { get; set; }
+        public ICollection<Pessoa> ListaDeProfissoes { get; set; }
 
         /// <summary>
         /// lista dos IDs dos filmes associados à pessoa autenticada

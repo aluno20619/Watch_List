@@ -2,7 +2,7 @@
 
 namespace Watch_List.Data.Migrations
 {
-    public partial class Utilizadores : Migration
+    public partial class Correctbd : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,37 +37,21 @@ namespace Watch_List.Data.Migrations
                 keyColumn: "Id",
                 keyValue: "f",
                 column: "ConcurrencyStamp",
-                value: "7333b206-e8a2-468e-b6a7-75de2fd4c157");
+                value: "fb4bc6fc-3199-4006-84e9-cb21419dad33");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "g",
                 column: "ConcurrencyStamp",
-                value: "a3c9ffe3-787a-4fbe-abd9-c5e087af68a3");
+                value: "bc38b5d5-54af-48a7-be41-32dee7250d02");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "m",
                 column: "ConcurrencyStamp",
-                value: "2c51d060-639e-4cba-81b0-1b5d3f1c44fd");
-
-            migrationBuilder.InsertData(
-                table: "Utilizador",
-                columns: new[] { "Id", "Email", "Nome", "UtilIdFK" },
-                values: new object[,]
-                {
-                    { 1, "manuelbastos1234@gmail.com", "ManuelBastos", "GESTOR" },
-                    { 2, "mariaandrade89@sapo.pt", "MariaAndrade", "FUNCIONARIO" },
-                    { 3, "Carolinasilva34@gmail.com", "CarolinaSilva", "FUNCIONARIO" },
-                    { 4, "granady123@gmail.com", "granady123", "MEMBRO" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "UtilFilme",
-                columns: new[] { "Id", "Estado", "FilFK", "UtilFK" },
-                values: new object[] { 1, "Para ver", 1, 4 });
+                value: "87285f01-23b0-4d62-bd37-3c9c9c388cc8");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UtilFilme_UtilFK",
@@ -95,11 +79,6 @@ namespace Watch_List.Data.Migrations
             migrationBuilder.DropIndex(
                 name: "IX_UtilFilme_UtilFK",
                 table: "UtilFilme");
-
-            migrationBuilder.DeleteData(
-                table: "UtilFilme",
-                keyColumn: "Id",
-                keyValue: 1);
 
             migrationBuilder.DropColumn(
                 name: "UtilFK",

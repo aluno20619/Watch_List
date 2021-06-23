@@ -10,8 +10,8 @@ using Watch_List.Data;
 namespace Watch_List.Data.Migrations
 {
     [DbContext(typeof(WatchListDbContext))]
-    [Migration("20210622175533_Utilizadores")]
-    partial class Utilizadores
+    [Migration("20210623215336_Correctbd")]
+    partial class Correctbd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,21 +51,21 @@ namespace Watch_List.Data.Migrations
                         new
                         {
                             Id = "m",
-                            ConcurrencyStamp = "2c51d060-639e-4cba-81b0-1b5d3f1c44fd",
+                            ConcurrencyStamp = "87285f01-23b0-4d62-bd37-3c9c9c388cc8",
                             Name = "Membro",
                             NormalizedName = "MEMBRO"
                         },
                         new
                         {
                             Id = "f",
-                            ConcurrencyStamp = "7333b206-e8a2-468e-b6a7-75de2fd4c157",
+                            ConcurrencyStamp = "fb4bc6fc-3199-4006-84e9-cb21419dad33",
                             Name = "Funcionario",
                             NormalizedName = "FUNCIONARIO"
                         },
                         new
                         {
                             Id = "g",
-                            ConcurrencyStamp = "a3c9ffe3-787a-4fbe-abd9-c5e087af68a3",
+                            ConcurrencyStamp = "bc38b5d5-54af-48a7-be41-32dee7250d02",
                             Name = "Gestor",
                             NormalizedName = "GESTOR"
                         });
@@ -548,15 +548,6 @@ namespace Watch_List.Data.Migrations
                     b.HasIndex("UtilFK");
 
                     b.ToTable("UtilFilme");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Estado = "Para ver",
-                            FilFK = 1,
-                            UtilFK = 4
-                        });
                 });
 
             modelBuilder.Entity("Watch_List.Models.Utilizador", b =>
@@ -581,36 +572,6 @@ namespace Watch_List.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Utilizador");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "manuelbastos1234@gmail.com",
-                            Nome = "ManuelBastos",
-                            UtilIdFK = "GESTOR"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "mariaandrade89@sapo.pt",
-                            Nome = "MariaAndrade",
-                            UtilIdFK = "FUNCIONARIO"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Email = "Carolinasilva34@gmail.com",
-                            Nome = "CarolinaSilva",
-                            UtilIdFK = "FUNCIONARIO"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Email = "granady123@gmail.com",
-                            Nome = "granady123",
-                            UtilIdFK = "MEMBRO"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

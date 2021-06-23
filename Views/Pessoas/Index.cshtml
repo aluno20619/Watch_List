@@ -59,7 +59,7 @@
             else
             {
                 <td>
-                   -
+                    -
                 </td>
             }
             <td>
@@ -69,7 +69,10 @@
                 @Html.DisplayFor(modelItem => item.Nacionalidade)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Profissoes.Id)
+                @Html.DisplayFor(modelItem => item.ProfissaoFK)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ListaDeFilmes)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |

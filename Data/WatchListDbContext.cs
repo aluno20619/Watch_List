@@ -67,18 +67,6 @@ namespace Watch_List.Data
                 new Genero { Id = 10, Nome = "SFI" }
             );
 
-            modelBuilder.Entity<Utilizador>().HasData(
-                 new Utilizador { Id = 1, Nome = "ManuelBastos", Email = "manuelbastos1234@gmail.com", UtilIdFK ="GESTOR" },
-                 new Utilizador { Id = 2, Nome = "MariaAndrade", Email = "mariaandrade89@sapo.pt", UtilIdFK = "FUNCIONARIO" },
-                 new Utilizador { Id = 3, Nome = "CarolinaSilva", Email = "Carolinasilva34@gmail.com", UtilIdFK = "FUNCIONARIO" },
-                 new Utilizador { Id = 4, Nome = "granady123", Email = "granady123@gmail.com", UtilIdFK = "MEMBRO" }
-
-          );
-
-            modelBuilder.Entity<UtilFilme>().HasData(
-             new UtilFilme { Id = 1, FilFK = 1, UtilFK = 4, Estado = "Para ver" }
-           );
-
             modelBuilder.Entity<Filme>().HasData(
                new Filme {Id = 1, Titulo = "O Castelo Andante", Ano = 2004, Poster = "howlsmovingcastle.jpg", Resumo = "Sophie encontra um feiticeiro chamado Howl a caminho de visitar a sua irmã Lettie. Ao regressar a casa, a Bruxa do Nada aparece e transforma a numa mulher de noventa anos de idade. Em busca de quebrar a maldição, Sophie sai de casa e parte para o campo para encontrar o castelo andante que pertence ao Howl.", Trailer = "https://www.youtube.com/watch?v=iwROgK94zcM" }
            );
