@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Pessoas</h1>
 
 <p>
     <a asp-action="Create">Criar Novo</a>
@@ -30,9 +30,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nacionalidade)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProfissaoFK)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -45,7 +42,10 @@
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Foto)
+                <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Foto)"
+                     width="50"
+                     alt="@Html.DisplayFor(modelItem => item.Nome)"
+                     title="@Html.DisplayFor(modelItem => item.Nome)" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DataNasc)
@@ -67,12 +67,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nacionalidade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfissaoFK)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ListaDeFilmes)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |

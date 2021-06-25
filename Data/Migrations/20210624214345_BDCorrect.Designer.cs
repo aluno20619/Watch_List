@@ -10,8 +10,8 @@ using Watch_List.Data;
 namespace Watch_List.Data.Migrations
 {
     [DbContext(typeof(WatchListDbContext))]
-    [Migration("20210619221345_AlterDB")]
-    partial class AlterDB
+    [Migration("20210624214345_BDCorrect")]
+    partial class BDCorrect
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,21 +20,6 @@ namespace Watch_List.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("FilmeGenero", b =>
-                {
-                    b.Property<int>("ListaDeFilmesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ListaDeGenerosId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ListaDeFilmesId", "ListaDeGenerosId");
-
-                    b.HasIndex("ListaDeGenerosId");
-
-                    b.ToTable("FilmeGenero");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -66,21 +51,21 @@ namespace Watch_List.Data.Migrations
                         new
                         {
                             Id = "m",
-                            ConcurrencyStamp = "656ac837-c164-480e-9579-7e2776dccfd4",
+                            ConcurrencyStamp = "cc1d8372-7dbf-470c-a159-34155da73ab7",
                             Name = "Membro",
                             NormalizedName = "MEMBRO"
                         },
                         new
                         {
                             Id = "f",
-                            ConcurrencyStamp = "9d473508-8ae9-43bc-86fe-7a8380210d50",
+                            ConcurrencyStamp = "a23513ab-28da-43cc-acdf-850b98e4634d",
                             Name = "Funcionario",
                             NormalizedName = "FUNCIONARIO"
                         },
                         new
                         {
                             Id = "g",
-                            ConcurrencyStamp = "5875963b-6f7e-44b3-9443-77a18ffd1527",
+                            ConcurrencyStamp = "908f09c6-ecef-42a2-90ec-0921b9559990",
                             Name = "Gestor",
                             NormalizedName = "GESTOR"
                         });
@@ -290,6 +275,47 @@ namespace Watch_List.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Filme");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ano = 2004,
+                            Poster = "howlsmovingcastle.jpg",
+                            Resumo = "Sophie encontra um feiticeiro chamado Howl a caminho de visitar a sua irmã Lettie. Ao regressar a casa, a Bruxa do Nada aparece e transforma a numa mulher de noventa anos de idade. Em busca de quebrar a maldição, Sophie sai de casa e parte para o campo para encontrar o castelo andante que pertence ao Howl.",
+                            Titulo = "O Castelo Andante",
+                            Trailer = "https://www.youtube.com/watch?v=iwROgK94zcM"
+                        });
+                });
+
+            modelBuilder.Entity("Watch_List.Models.FilmeGenero", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FilmeFK")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GeneroFK")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilmeFK");
+
+                    b.HasIndex("GeneroFK");
+
+                    b.ToTable("FilmeGenero");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FilmeFK = 1,
+                            GeneroFK = 6
+                        });
                 });
 
             modelBuilder.Entity("Watch_List.Models.Genero", b =>
@@ -307,6 +333,58 @@ namespace Watch_List.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genero");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nome = "Aventura"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nome = "Ação"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nome = "Comédia"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Nome = "Documentário"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Nome = "Drama"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Nome = "Fantasia"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Nome = "Romance"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Nome = "Suspense"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Nome = "Terror"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Nome = "SFI"
+                        });
                 });
 
             modelBuilder.Entity("Watch_List.Models.Pessoa", b =>
@@ -349,6 +427,19 @@ namespace Watch_List.Data.Migrations
                     b.HasIndex("ProfissoesId");
 
                     b.ToTable("Pessoa");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DataInic = new DateTime(1995, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataNasc = new DateTime(1971, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataObi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Foto = "emilymortimer.jpg",
+                            Nacionalidade = "Reino Unido",
+                            Nome = "Emily Kathleen Anne Mortimer",
+                            ProfissaoFK = 1
+                        });
                 });
 
             modelBuilder.Entity("Watch_List.Models.PessoaFilme", b =>
@@ -368,18 +459,21 @@ namespace Watch_List.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("ProfissaoId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FilmeFK");
 
                     b.HasIndex("PessoaFK");
 
-                    b.HasIndex("ProfissaoId");
-
                     b.ToTable("PessoaFilme");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FilmeFK = 1,
+                            PessoaFK = 1
+                        });
                 });
 
             modelBuilder.Entity("Watch_List.Models.Profissao", b =>
@@ -401,6 +495,28 @@ namespace Watch_List.Data.Migrations
                     b.HasIndex("PessoaId");
 
                     b.ToTable("Profissao");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Tarefa = "Actor"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Tarefa = "Realizador"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Tarefa = "Diretor"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Tarefa = "Produtor"
+                        });
                 });
 
             modelBuilder.Entity("Watch_List.Models.UtilFilme", b =>
@@ -417,29 +533,40 @@ namespace Watch_List.Data.Migrations
                     b.Property<int>("FilFK")
                         .HasColumnType("int");
 
-                    b.Property<string>("UtilIdFK")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UtilFK")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FilFK");
 
+                    b.HasIndex("UtilFK");
+
                     b.ToTable("UtilFilme");
                 });
 
-            modelBuilder.Entity("FilmeGenero", b =>
+            modelBuilder.Entity("Watch_List.Models.Utilizador", b =>
                 {
-                    b.HasOne("Watch_List.Models.Filme", null)
-                        .WithMany()
-                        .HasForeignKey("ListaDeFilmesId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.HasOne("Watch_List.Models.Genero", null)
-                        .WithMany()
-                        .HasForeignKey("ListaDeGenerosId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Property<string>("Email")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UtilIdFK")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Utilizador");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -493,6 +620,25 @@ namespace Watch_List.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Watch_List.Models.FilmeGenero", b =>
+                {
+                    b.HasOne("Watch_List.Models.Filme", "Filme")
+                        .WithMany("ListaDeGeneros")
+                        .HasForeignKey("FilmeFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Watch_List.Models.Genero", "Genero")
+                        .WithMany("ListaDeFilmes")
+                        .HasForeignKey("GeneroFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Filme");
+
+                    b.Navigation("Genero");
+                });
+
             modelBuilder.Entity("Watch_List.Models.Pessoa", b =>
                 {
                     b.HasOne("Watch_List.Models.Profissao", "Profissoes")
@@ -517,11 +663,6 @@ namespace Watch_List.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Watch_List.Models.Profissao", null)
-                        .WithMany("ListaDePessoas")
-                        .HasForeignKey("ProfissaoId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.Navigation("Filme");
 
                     b.Navigation("Pessoa");
@@ -543,14 +684,29 @@ namespace Watch_List.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Watch_List.Models.Utilizador", "Utilizador")
+                        .WithMany("ListaDeFilmes")
+                        .HasForeignKey("UtilFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Filme");
+
+                    b.Navigation("Utilizador");
                 });
 
             modelBuilder.Entity("Watch_List.Models.Filme", b =>
                 {
+                    b.Navigation("ListaDeGeneros");
+
                     b.Navigation("ListaDePessoas");
 
                     b.Navigation("ListaDeUtilizadores");
+                });
+
+            modelBuilder.Entity("Watch_List.Models.Genero", b =>
+                {
+                    b.Navigation("ListaDeFilmes");
                 });
 
             modelBuilder.Entity("Watch_List.Models.Pessoa", b =>
@@ -560,9 +716,9 @@ namespace Watch_List.Data.Migrations
                     b.Navigation("ListaDeProfissoes");
                 });
 
-            modelBuilder.Entity("Watch_List.Models.Profissao", b =>
+            modelBuilder.Entity("Watch_List.Models.Utilizador", b =>
                 {
-                    b.Navigation("ListaDePessoas");
+                    b.Navigation("ListaDeFilmes");
                 });
 #pragma warning restore 612, 618
         }

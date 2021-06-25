@@ -12,12 +12,7 @@ namespace Watch_List.Models
     /// </summary>
     public class Profissao
     {
-        public Profissao()
-        {
-
-            ListaDePessoas= new HashSet<PessoaFilme>();
-           
-        }
+       
         [Key]
         public int Id { get; set; }
 
@@ -28,13 +23,7 @@ namespace Watch_List.Models
         [Display(Name = "Profissão")]
         public string Tarefa { get; set; }
 
-        //***********************************************************************
-        /// <summary>
-        /// definição do atributo que será utilizado para exprimir o relacionamento com os objetos da classe Pessoa
-        /// </summary>
-        //***********************************************************************
-        [Display(Name = "Lista de Pessoas")]
-        public ICollection<PessoaFilme> ListaDePessoas { get; set; }
+        
 
 
        

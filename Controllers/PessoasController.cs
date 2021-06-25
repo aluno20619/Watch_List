@@ -14,7 +14,7 @@ using Watch_List.Models;
 
 namespace Watch_List.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class PessoasController : Controller
     {
         /// <summary>
@@ -45,23 +45,25 @@ namespace Watch_List.Controllers
         public async Task<IActionResult> Index()
         {
             // dados das profissoes
-            var profissoes = await _context.Pessoa.Include(f => f.Profissoes).ToListAsync();
-            
+            //var profissoes = await (from t in _context.Profissao
+            //                        join p in _context.Pessoa on t.Id equals p.ProfissaoFK
+            //                        select p.Id).ToListAsync();
 
-            //Filmes assosciados a uma pessoa
-            //equivalente a: SELECT * FROM UtilFilme uf, Pessoa p, Utilizador u, Filme f, PessoaFilme pf WHERE f.Id = pf.FilmeFK AND ... AND u.UserName == idPessoaAutenticada
-            var filmes = await (from f in _context.Filme
-                                join pf in _context.PessoaFilme on f.Id equals pf.FilmeFK
-                                join p in _context.Pessoa on pf.PessoaFK equals p.Id
-                              select f.Id).ToListAsync();
+
+            ////Filmes assosciados a uma pessoa
+            ////equivalente a: SELECT * FROM  Pessoa p,  Filme f, PessoaFilme pf WHERE f.Id = pf.FilmeFK AND ... 
+            //var filmes = await (from f in _context.Filme
+            //                    join pf in _context.PessoaFilme on f.Id equals pf.FilmeFK
+            //                    join p in _context.Pessoa on pf.PessoaFK equals p.Id
+            //                  select f.Id).ToListAsync();
 
           
-            // transporta os objetos para a View
-            var fotos = new PessoasOnFilmes
-            {
-                ListaDeProfissoes = profissoes,
-                ListaFilme = filmes
-            };
+            //// transporta os objetos para a View
+            //var fotos = new PessoasOnFilmes
+            //{
+            //    ListaDeProfissoes = profissoes,
+            //    ListaFilme = filmes
+            //};
 
             return View(await _context.Pessoa.ToListAsync());
         }
@@ -110,11 +112,7 @@ namespace Watch_List.Controllers
             // ViewData["ListaFilmes"] = new SelectList(filmes, "Id", "Titulo");
             /****************************************************************************************************************/
 
-            //profissoes associadas as pessoas
-            var profissao = (from t in _context.Profissao
-                        join pf in _context.Pessoa on t.Id equals pf.ProfissaoFK    
-                        select t).OrderBy(p => p.Tarefa);
-            ViewData["ProfissaoFK"] = new SelectList(profissao, "Id", "Tarefa");
+            
             return View();
         }
 
@@ -134,16 +132,12 @@ namespace Watch_List.Controllers
                 // adicionar msg de erro
                 ModelState.AddModelError("", "Adicione uma fotografia, por favor");
                 // devolver o controlo à View
-                var profissao = (from t in _context.Profissao
-                                 join pf in _context.Pessoa on t.Id equals pf.ProfissaoFK
-                                 select t).OrderBy(p => p.Tarefa);
-                ViewData["ProfissaoFK"] = new SelectList(profissao, "Id", "Tarefa");
                 return View(pessoa);
             }
             else
             {
                 // há ficheiro. Mas, será um ficheiro válido?
-                if (imagem.ContentType == "image/jpeg" || imagem.ContentType == "image/png")
+                if (imagem.ContentType == "image/jpeg" || imagem.ContentType == "image/png" || imagem.ContentType == "image/jpg")
                 {
                     // definir o novo nome da fotografia     
                     Guid g;
@@ -167,10 +161,6 @@ namespace Watch_List.Controllers
                     // adicionar msg de erro
                     ModelState.AddModelError("", "Só pode escolher uma imagem");
                     // devolver o controlo à View
-                    var profissao = (from t in _context.Profissao
-                                     join pf in _context.Pessoa on t.Id equals pf.ProfissaoFK
-                                     select t).OrderBy(p => p.Tarefa);
-                    ViewData["ProfissaoFK"] = new SelectList(profissao, "Id", "Tarefa");
                     return View(pessoa);
                 }
             }
@@ -268,7 +258,7 @@ namespace Watch_List.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfissaoFK"] = new SelectList(_context.Profissao, "Id", "Id", pessoa.ProfissaoFK);
+           
             return View(pessoa);
         }
 

@@ -18,7 +18,7 @@ namespace Watch_List.Data
         public DateTime DataRegisto { get; set; }
     }
 
-    public class WatchListDbContext : IdentityDbContext
+    public class WatchListDbContext : IdentityDbContext<ApplicationUser>
     {
         public WatchListDbContext(DbContextOptions<WatchListDbContext> options)
             : base(options)

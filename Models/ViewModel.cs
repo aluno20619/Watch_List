@@ -20,7 +20,7 @@ namespace Watch_List.Models {
         /// <summary>
         /// lista dos IDs dos filmes associados à pessoa autenticada
         /// </summary>
-        public ICollection<int> ListaFilme { get; set; }
+        public ICollection<Filme> ListaFilme { get; set; }
 
     }
 

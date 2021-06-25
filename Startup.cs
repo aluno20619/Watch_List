@@ -27,13 +27,35 @@ namespace Watch_List
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // variaveis aux 
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromSeconds(100);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            
             services.AddDbContext<WatchListDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<WatchListDbContext>();
+            // deixa -se  de referir 'IdentityUser' e passa-se a usar 'ApplicationUser'
+            //services.AddDefaultIdentity<ApplicationUser>(options =>
+            //              options.SignIn.RequireConfirmedAccount = true)
+            //                     .AddRoles<IdentityRole>()  // ativa o uso de Roles
+            //                     .AddEntityFrameworkStores<WatchListDbContext>();
+            //services.AddControllersWithViews();
+
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //   .AddEntityFrameworkStores<WatchListDbContext>();
+            //services.AddControllersWithViews();
+
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+                          options.SignIn.RequireConfirmedAccount = true)
+                                 .AddRoles<IdentityRole>()  // ativa o uso de Roles
+                                 .AddEntityFrameworkStores<WatchListDbContext>();
             services.AddControllersWithViews();
         }
 
@@ -55,6 +77,9 @@ namespace Watch_List
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            // permitir o uso de vars. de sessão
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();
