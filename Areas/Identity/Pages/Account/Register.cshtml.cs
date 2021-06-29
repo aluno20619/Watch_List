@@ -66,7 +66,7 @@ namespace Watch_List.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             /// <summary>
-            /// permitir a recolha dos dados do tilizador
+            /// permitir a recolha dos dados do utilizador
             /// </summary>
             public Utilizador Utilizador { get; set; }
         }

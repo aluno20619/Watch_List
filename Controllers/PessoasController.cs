@@ -14,7 +14,7 @@ using Watch_List.Models;
 
 namespace Watch_List.Controllers
 {
-   // [Authorize]
+    [Authorize]
     public class PessoasController : Controller
     {
         /// <summary>
@@ -57,6 +57,7 @@ namespace Watch_List.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         // GET: Pessoas/Details/5
+      
         public async Task<IActionResult> Details(int? id)
         {
             //se não houver id
@@ -84,6 +85,7 @@ namespace Watch_List.Controllers
         /// </summary>
         /// <returns></returns>
         // GET: Pessoas/Create
+        [Authorize(Roles = "Funcionario,Gestor")]
         public IActionResult Create()
         {
             return View();
@@ -94,6 +96,7 @@ namespace Watch_List.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Create([Bind("Id,Nome,Foto,DataNasc,DataObi,DataInic,Nacionalidade,ProfissaoFK")] Pessoa pessoa, IFormFile imagem)
         {
             // var auxiliar
@@ -169,6 +172,7 @@ namespace Watch_List.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         // GET: Pessoas/Edit/5
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -192,6 +196,7 @@ namespace Watch_List.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Foto,DataNasc,DataObi,DataInic,Nacionalidade,ProfissaoFK")] Pessoa pessoa)
         {
             if (id != pessoa.Id)
@@ -243,6 +248,7 @@ namespace Watch_List.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         // GET: Pessoas/Delete/5
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -261,7 +267,7 @@ namespace Watch_List.Controllers
             return View(pessoa);
         }
 
-        
+        [Authorize(Roles = "Funcionario,Gestor")]
         // POST: Pessoas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

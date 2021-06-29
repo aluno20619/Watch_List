@@ -15,6 +15,7 @@ using Watch_List.Models;
 
 namespace Watch_List.Controllers
 {
+    [Authorize]
     public class FilmesController : Controller
     {
         /// <summary>
@@ -77,6 +78,7 @@ namespace Watch_List.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         // GET: Filmes/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -113,6 +115,7 @@ namespace Watch_List.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Create([Bind("Id,Titulo,Ano,Resumo,Poster,Trailer")] Filme filme, IFormFile foto)
         {
             string caminhoCompleto = "";
@@ -197,6 +200,9 @@ namespace Watch_List.Controllers
             {
                 return NotFound();
             }
+            // guardar o ID do objeto enviado para o browser
+            // através de uma variável de sessão
+            HttpContext.Session.SetInt32("NumFotoEmEdicao", filme.Id);
             return View(filme);
         }
 
@@ -210,6 +216,19 @@ namespace Watch_List.Controllers
             if (id != filme.Id)
             {
                 return NotFound();
+            }
+
+            // recuperar o ID do objeto enviado para o browser
+            var numIdFoto = HttpContext.Session.GetInt32("NumFotoEmEdicao");
+
+            // e compará-lo com o ID recebido
+            // se forem iguais, continuamos
+            // se forem diferentes, não fazemos a alteração
+
+            if (numIdFoto == null || numIdFoto != filme.Id)
+            {
+                //não houve problemas e redirecionamos para o index
+                return RedirectToAction("Index");
             }
 
             if (ModelState.IsValid)
@@ -258,9 +277,28 @@ namespace Watch_List.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            try { 
             var filme = await _context.Filme.FindAsync(id);
             _context.Filme.Remove(filme);
             await _context.SaveChangesAsync();
+
+            //remover o ficheiro
+
+            // localização do armazenamento da imagem              
+            var localizacaoFicheiro = _caminho.WebRootPath;
+            var caminhoCompleto = Path.Combine(localizacaoFicheiro, "Imagens", filme.Poster);
+
+            //source: https://stackoverflow.com/questions/22650740/asp-net-mvc-5-delete-file-from-server
+            if (System.IO.File.Exists(caminhoCompleto))
+            {
+                System.IO.File.Delete(caminhoCompleto);
+            }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return RedirectToAction(nameof(Index));
         }
 
