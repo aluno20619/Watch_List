@@ -34,6 +34,9 @@ namespace Watch_List.Data
                new IdentityRole { Id = "g", Name = "Gestor", NormalizedName = "GESTOR" }
            );
 
+           
+            
+
             /// <summary>
             ///  UmParaMuitos e MuitosParaMuitos restirar o Cascade 
             /// Source: https://stackoverflow.com/questions/34768976/specifying-on-delete-no-action-in-entity-framework-7

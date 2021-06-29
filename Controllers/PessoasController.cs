@@ -44,26 +44,9 @@ namespace Watch_List.Controllers
         // GET: Pessoas
         public async Task<IActionResult> Index()
         {
-            // dados das profissoes
-            //var profissoes = await (from t in _context.Profissao
-            //                        join p in _context.Pessoa on t.Id equals p.ProfissaoFK
-            //                        select p.Id).ToListAsync();
 
-
-            ////Filmes assosciados a uma pessoa
-            ////equivalente a: SELECT * FROM  Pessoa p,  Filme f, PessoaFilme pf WHERE f.Id = pf.FilmeFK AND ... 
-            //var filmes = await (from f in _context.Filme
-            //                    join pf in _context.PessoaFilme on f.Id equals pf.FilmeFK
-            //                    join p in _context.Pessoa on pf.PessoaFK equals p.Id
-            //                  select f.Id).ToListAsync();
-
-          
-            //// transporta os objetos para a View
-            //var fotos = new PessoasOnFilmes
-            //{
-            //    ListaDeProfissoes = profissoes,
-            //    ListaFilme = filmes
-            //};
+            //Profissões associadas a pessoas
+           // var profissoes = await _context.Pessoa.Include(f => f.Profissoes).ToListAsync();
 
             return View(await _context.Pessoa.ToListAsync());
         }
@@ -103,16 +86,6 @@ namespace Watch_List.Controllers
         // GET: Pessoas/Create
         public IActionResult Create()
         {
-            /*****************************************************************************************************************/
-            //Filmes assosciados a uma pessoa
-            //var filmes = (from f in _context.Filme
-            //              join pf in _context.PessoaFilme on f.Id equals pf.FilmeFK
-            //              join p in _context.Pessoa on pf.PessoaFK equals p.Id
-            //              select f).OrderBy(f => f.Titulo);
-            // ViewData["ListaFilmes"] = new SelectList(filmes, "Id", "Titulo");
-            /****************************************************************************************************************/
-
-            
             return View();
         }
 
@@ -126,13 +99,15 @@ namespace Watch_List.Controllers
             // var auxiliar
             string caminhoCompleto = "";
 
+           
             if (imagem == null)
             {
-                // não há ficheiro
-                // adicionar msg de erro
+               // não há ficheiro
+               // adicionar msg de erro
                 ModelState.AddModelError("", "Adicione uma fotografia, por favor");
-                // devolver o controlo à View
+               // devolver o controlo à View
                 return View(pessoa);
+                //pessoa.Foto = "noimage.png";
             }
             else
             {

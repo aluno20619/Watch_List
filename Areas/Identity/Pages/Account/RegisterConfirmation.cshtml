@@ -1,0 +1,16 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Register confirmation";
+}
+
+<h1>A sua conta foi registada</h1>
+@{
+    if (@Model.DisplayConfirmAccountLink)
+    {
+<p>
+    <a class="navbar-brand" asp-area="" asp-controller="" asp-action="Index">Voltar Página Inicial</a>
+</p>
+    }
+   
+}

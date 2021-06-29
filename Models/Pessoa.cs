@@ -44,19 +44,19 @@ namespace Watch_List.Models
         /// Data de nascimento da pessoa
         /// </summary>
         [Display(Name = "Data de Nascimento")]
-        public DateTime DataNasc { get; set; }
+        public DateTime? DataNasc { get; set; }
 
         /// <summary>
         /// Data de óbito da pessoa
         /// </summary>
         [Display(Name = "Data de Óbito")]
-        public DateTime DataObi { get; set; }
+        public DateTime? DataObi { get; set; }
 
         /// <summary>
         /// Data de ínicio de carreira da pessoa
         /// </summary>
         [Display(Name = "Data de ínicio de carreira")]
-        public DateTime DataInic { get; set; }
+        public DateTime? DataInic { get; set; }
 
         /// <summary>
         /// Nacionalidade da pessoa

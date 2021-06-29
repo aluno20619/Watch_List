@@ -7,24 +7,16 @@ namespace Watch_List.Models {
     /// </summary>
     
 
-
-
-    public class PessoasOnFilmes
+    public class UtilizadoresFilmes
     {
-
-        /// <summary>
-        /// lista de profissoes que a pessoa tem
-        /// </summary>
-        public ICollection<Pessoa> ListaDeProfissoes { get; set; }
 
         /// <summary>
         /// lista dos IDs dos filmes associados à pessoa autenticada
         /// </summary>
-        public ICollection<Filme> ListaFilme { get; set; }
-
+        public ICollection<int> ListaDeFilmes { get; set; }
     }
 
-
+   
 
 
     public class ErrorViewModel
