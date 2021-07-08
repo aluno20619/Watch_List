@@ -49,6 +49,12 @@ namespace Watch_List.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            
+            [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+            [StringLength(32, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
+            [Display(Name = "Nome de utilizador")]
+            public string UserName { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -69,7 +75,7 @@ namespace Watch_List.Areas.Identity.Pages.Account
             /// <summary>
             /// permitir a recolha dos dados do utilizador
             /// </summary>
-            public Utilizador Utilizador { get; set; }
+           // public Utilizador Utilizador { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -93,7 +99,7 @@ namespace Watch_List.Areas.Identity.Pages.Account
            
             {
                 var user = new ApplicationUser {
-                    UserName = Input.Email, 
+                    UserName = Input.UserName, 
                     Email = Input.Email,
                     DataRegisto = DateTime.Now 
                 };
@@ -103,26 +109,26 @@ namespace Watch_List.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    await _userManager.AddToRoleAsync(user, "Gestor");
+                    await _userManager.AddToRoleAsync(user,"Membro");
 
                     //*************************************************************
                     // Guardar os dados do Utilizador
                     //*************************************************************
                     // preparar os dados do Criador para serem adicionados à BD
-                    Input.Utilizador.Email = Input.Email; 
+                    //Input.Utilizador.Email = Input.Email; 
 
-                    Input.Utilizador.UtilIdFK = user.Id;  // adicionar o ID do utilizador,
-                                                       // para formar uma 'ponte' (foreign key) entre
-                                                       // os dados da autenticação e os dados do 'negócio'
+                    //Input.Utilizador.UtilIdFK = user.Id;  // adicionar o ID do utilizador,
+                    //                                      // para formar uma 'ponte' (foreign key) entre
+                    //                                      // os dados da autenticação e os dados do 'negócio'
 
-                   
+                    //Input.Utilizador.Id = 1;
                     // estamos em condições de guardar os dados na BD
                     try
                     {
-                        
-                        /*esta a a dar erro*/
 
-                        _context.Add(Input.Utilizador); // adicionar o utilizador
+
+
+                        //    _context.Add(Input.Utilizador); // adicionar o utilizador
                         await _context.SaveChangesAsync();
 
                         // Enviar para o utilizador para a página de confirmação da criaçao de Registo

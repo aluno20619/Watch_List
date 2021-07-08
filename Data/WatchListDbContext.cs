@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using Watch_List.Models;
@@ -11,11 +12,14 @@ namespace Watch_List.Data
 {
     public class ApplicationUser : IdentityUser
     {
+       
 
         /// <summary>
         /// recolhe a data de registo de um utilizador
         /// </summary>
         public DateTime DataRegisto { get; set; }
+
+       
     }
 
     public class WatchListDbContext : IdentityDbContext<ApplicationUser>

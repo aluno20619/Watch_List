@@ -30,7 +30,7 @@ namespace Watch_List.Models
         /// //***********************************************************************
         [ForeignKey(nameof(Utilizador))]
         [Display(Name = "Utilizador")]
-        public int UtilFK { get; set; }
+        public  int UtilFK { get; set; }
         public Utilizador Utilizador { get; set; }
 
         //***********************************************************************
