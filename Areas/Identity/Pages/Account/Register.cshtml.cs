@@ -103,7 +103,7 @@ namespace Watch_List.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    await _userManager.AddToRoleAsync(user, "Membro");
+                    await _userManager.AddToRoleAsync(user, "Gestor");
 
                     //*************************************************************
                     // Guardar os dados do Utilizador
@@ -119,9 +119,13 @@ namespace Watch_List.Areas.Identity.Pages.Account
                     // estamos em condições de guardar os dados na BD
                     try
                     {
+                        
+                        /*esta a a dar erro*/
+
                         _context.Add(Input.Utilizador); // adicionar o utilizador
-                        await _context.SaveChangesAsync(); 
-                                                           // Enviar para o utilizador para a página de confirmação da criaçao de Registo
+                        await _context.SaveChangesAsync();
+
+                        // Enviar para o utilizador para a página de confirmação da criaçao de Registo
                         return RedirectToPage("RegisterConfirmation");
                     }
                     catch (Exception)

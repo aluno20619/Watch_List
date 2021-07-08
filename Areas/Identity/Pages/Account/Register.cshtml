@@ -1,5 +1,6 @@
 ﻿@page
 @model RegisterModel
+@inject SignInManager<ApplicationUser> SignInManager
 
 @{
     ViewData["Title"] = "Registar";
@@ -37,13 +38,26 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            @if (SignInManager.IsSignedIn(User))
+            {
 
-          
-            
+                @if (User.IsInRole("Gestor"))
+                {
+                        /* Colocar aqui uma lista de utilIdFK*/
+                }
+            }
+            @*<div class="form-group">
+            <label asp-for="Input.Utilizador.UtilIdFK"></label>
+            <input asp-for="Input.Utilizador.UtilIdFK" class="form-control" />
+            <span asp-validation-for="Input.Utilizador.UtilIdFK" class="text-danger"></span>
+        </div>*@
+
+
+
             <button type="submit" class="btn btn-primary">Registar</button>
         </form>
     </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

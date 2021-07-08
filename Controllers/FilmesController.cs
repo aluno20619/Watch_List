@@ -64,13 +64,13 @@ namespace Watch_List.Controllers
 
             // transportar os dois objetos para a View
             // iremos usar um ViewModel
-            //var conta = new UtilizadoresFilmes
-            //{
-            //    ListaDeFilmes = filmes
+            var conta = new UtilizadoresFilmes
+            {
+                ListaDeFilmes = filmes
 
-            //};
+            };
 
-           // return View(filmes);
+            // return View(filmes);
             return View(await _context.Filme.ToListAsync());
         }
 

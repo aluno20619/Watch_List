@@ -7,18 +7,28 @@
 <h1>Detalhes</h1>
 
 <div>
-    <h4>Genero</h4>
+  <h4>@Html.DisplayFor(model => model.Nome)</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
+        @if (Model.ListaDeFilmes.Count == 0) { }
+
+        else
+        {
+        <dt>
+            Titulo
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
+
+            @foreach (var fil in Model.ListaDeFilmes)
+            {
+                <dd class="col-sm-2" style="text-align:left;">
+                    @fil.Filme.Titulo
+                </dd>
+            }
+
+        }
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
     <a asp-action="Index">Voltar à página anterior</a>
 </div>

@@ -39,7 +39,7 @@ namespace Watch_List.Controllers
         }
 
         // GET: Utilizadors/Details/5
-        [Authorize(Roles = "Gestor")]
+        
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
