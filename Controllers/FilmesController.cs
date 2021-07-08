@@ -22,6 +22,7 @@ namespace Watch_List.Controllers
         /// Representa a bd
         /// </summary>
         private readonly WatchListDbContext _context;
+
         /// <summary>
         /// este atributo contém os dados da app web no servidor
         /// </summary>
@@ -55,7 +56,7 @@ namespace Watch_List.Controllers
             string idDaPessoaAutenticada = _userManager.GetUserId(User);
 
             //Filmes assosciados a um utilizador
-            var filmes = (from f in _context.Filme
+            var filmes = await (from f in _context.Filme
                           join uf in _context.UtilFilme on f.Id equals uf.FilFK
                           join u in _context.Utilizador on uf.UtilFK equals u.Id
                           where u.UtilIdFK == idDaPessoaAutenticada
@@ -63,13 +64,14 @@ namespace Watch_List.Controllers
 
             // transportar os dois objetos para a View
             // iremos usar um ViewModel
-            var conta = new UtilizadoresFilmes
-            {
-                ListaDeFilmes = (ICollection<int>)filmes,
+            //var conta = new UtilizadoresFilmes
+            //{
+            //    ListaDeFilmes = filmes
 
-            };
+            //};
 
-            return View(filmes);
+           // return View(filmes);
+            return View(await _context.Filme.ToListAsync());
         }
 
         /// <summary>
@@ -97,6 +99,7 @@ namespace Watch_List.Controllers
         }
 
         // GET: Filmes/Create
+        [Authorize(Roles = "Funcionario,Gestor")]
         public IActionResult Create()
         {
             // Lista de filmes do utilizador autenticado
@@ -188,6 +191,7 @@ namespace Watch_List.Controllers
         }
 
         // GET: Filmes/Edit/5
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -211,6 +215,7 @@ namespace Watch_List.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Ano,Resumo,Poster,Trailer")] Filme filme)
         {
             if (id != filme.Id)
@@ -255,6 +260,7 @@ namespace Watch_List.Controllers
         }
 
         // GET: Filmes/Delete/5
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -275,6 +281,7 @@ namespace Watch_List.Controllers
         // POST: Filmes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try { 

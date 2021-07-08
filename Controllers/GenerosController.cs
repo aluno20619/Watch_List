@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Watch_List.Models;
 
 namespace Watch_List.Controllers
 {
+    [Authorize]
     public class GenerosController : Controller
     {
         private readonly WatchListDbContext _context;
@@ -20,12 +22,14 @@ namespace Watch_List.Controllers
         }
 
         // GET: Generos
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Genero.ToListAsync());
         }
 
         // GET: Generos/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +48,7 @@ namespace Watch_List.Controllers
         }
 
         // GET: Generos/Create
+        [Authorize(Roles = "Funcionario,Gestor")]
         public IActionResult Create()
         {
             return View();
@@ -66,6 +71,7 @@ namespace Watch_List.Controllers
         }
 
         // GET: Generos/Edit/5
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +92,7 @@ namespace Watch_List.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] Genero genero)
         {
             if (id != genero.Id)
@@ -117,6 +124,7 @@ namespace Watch_List.Controllers
         }
 
         // GET: Generos/Delete/5
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +145,7 @@ namespace Watch_List.Controllers
         // POST: Generos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var genero = await _context.Genero.FindAsync(id);

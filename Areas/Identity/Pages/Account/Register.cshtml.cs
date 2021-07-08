@@ -65,6 +65,7 @@ namespace Watch_List.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "A password e a sua confirmação não são iguais")]
             public string ConfirmPassword { get; set; }
 
+            
             /// <summary>
             /// permitir a recolha dos dados do utilizador
             /// </summary>
@@ -133,6 +134,8 @@ namespace Watch_List.Areas.Identity.Pages.Account
                         // avisar que houve um erro
                         ModelState.AddModelError("", "Ocorreu um erro na criação de dados");
                     }
+
+                    /*Codigo default*/
                     //    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     //    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     //    var callbackUrl = Url.Page(

@@ -16,6 +16,8 @@ namespace Watch_List.Areas.Identity
         {
             builder.ConfigureServices((context, services) => {
             });
+       
         }
+
     }
 }

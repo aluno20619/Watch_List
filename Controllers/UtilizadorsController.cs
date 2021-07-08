@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,24 +13,33 @@ using Watch_List.Models;
 namespace Watch_List.Controllers
 {
     [Authorize]
-    public class ProfissaosController : Controller
+    public class UtilizadorsController : Controller
     {
+        /// <summary>
+        /// Representa a bd
+        /// </summary>
         private readonly WatchListDbContext _context;
 
-        public ProfissaosController(WatchListDbContext context)
+        /// <summary>
+        /// Recolhe os dados da pessoa que se autenticou
+        /// </summary>
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public UtilizadorsController(WatchListDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        // GET: Profissaos
-        [AllowAnonymous]
+        // GET: Utilizadors
+        [Authorize(Roles = "Gestor")]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Profissao.ToListAsync());
+            return View(await _context.Utilizador.ToListAsync());
         }
 
-        // GET: Profissaos/Details/5
-        [AllowAnonymous]
+        // GET: Utilizadors/Details/5
+        [Authorize(Roles = "Gestor")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,41 +47,42 @@ namespace Watch_List.Controllers
                 return NotFound();
             }
 
-            var profissao = await _context.Profissao
+            var utilizador = await _context.Utilizador
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (profissao == null)
+            if (utilizador == null)
             {
                 return NotFound();
             }
 
-            return View(profissao);
+            return View(utilizador);
         }
 
-        // GET: Profissaos/Create
-        [Authorize(Roles = "Funcionario,Gestor")]
+        // GET: Utilizadors/Create
+        [Authorize(Roles = "Gestor")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Profissaos/Create
+        // POST: Utilizadors/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Tarefa")] Profissao profissao)
+        [Authorize(Roles = "Gestor")]
+        public async Task<IActionResult> Create([Bind("Id,UtilIdFK,Nome,Email")] Utilizador utilizador)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(profissao);
+                _context.Add(utilizador);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(profissao);
+            return View(utilizador);
         }
 
-        // GET: Profissaos/Edit/5
-        [Authorize(Roles = "Funcionario,Gestor")]
+        // GET: Utilizadors/Edit/5
+        [Authorize(Roles = "Gestor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,23 +90,23 @@ namespace Watch_List.Controllers
                 return NotFound();
             }
 
-            var profissao = await _context.Profissao.FindAsync(id);
-            if (profissao == null)
+            var utilizador = await _context.Utilizador.FindAsync(id);
+            if (utilizador == null)
             {
                 return NotFound();
             }
-            return View(profissao);
+            return View(utilizador);
         }
 
-        // POST: Profissaos/Edit/5
+        // POST: Utilizadors/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Funcionario,Gestor")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Tarefa")] Profissao profissao)
+        [Authorize(Roles = "Gestor")]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UtilIdFK,Nome,Email")] Utilizador utilizador)
         {
-            if (id != profissao.Id)
+            if (id != utilizador.Id)
             {
                 return NotFound();
             }
@@ -104,12 +115,12 @@ namespace Watch_List.Controllers
             {
                 try
                 {
-                    _context.Update(profissao);
+                    _context.Update(utilizador);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProfissaoExists(profissao.Id))
+                    if (!UtilizadorExists(utilizador.Id))
                     {
                         return NotFound();
                     }
@@ -120,11 +131,11 @@ namespace Watch_List.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(profissao);
+            return View(utilizador);
         }
 
-        // GET: Profissaos/Delete/5
-        [Authorize(Roles = "Funcionario,Gestor")]
+        // GET: Utilizadors/Delete/5
+        [Authorize(Roles = "Gestor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,31 +143,31 @@ namespace Watch_List.Controllers
                 return NotFound();
             }
 
-            var profissao = await _context.Profissao
+            var utilizador = await _context.Utilizador
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (profissao == null)
+            if (utilizador == null)
             {
                 return NotFound();
             }
 
-            return View(profissao);
+            return View(utilizador);
         }
 
-        // POST: Profissaos/Delete/5
+        // POST: Utilizadors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Funcionario,Gestor")]
+        [Authorize(Roles = "Gestor")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var profissao = await _context.Profissao.FindAsync(id);
-            _context.Profissao.Remove(profissao);
+            var utilizador = await _context.Utilizador.FindAsync(id);
+            _context.Utilizador.Remove(utilizador);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProfissaoExists(int id)
+        private bool UtilizadorExists(int id)
         {
-            return _context.Profissao.Any(e => e.Id == id);
+            return _context.Utilizador.Any(e => e.Id == id);
         }
     }
 }
