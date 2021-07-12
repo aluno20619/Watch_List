@@ -108,7 +108,7 @@ namespace Watch_List.Controllers
                           join u in _context.Utilizador on uf.UtilFK equals u.Id
                           where u.UtilIdFK == _userManager.GetUserId(User)
                           select f).OrderBy(f => f.Titulo);
-            ViewData["ListaFilmes"] = new SelectList(filmes, "Id", "Titulo");
+            ViewData["ListFilmes"] = new SelectList(filmes, "Id", "Titulo");
 
             return View();
         }
@@ -121,6 +121,8 @@ namespace Watch_List.Controllers
         [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Create([Bind("Id,Titulo,Ano,Resumo,Poster,Trailer")] Filme filme, IFormFile foto)
         {
+            
+
             string caminhoCompleto = "";
             bool haImagem = false;
 
@@ -176,6 +178,7 @@ namespace Watch_List.Controllers
                         using var stream = new FileStream(caminhoCompleto, FileMode.Create);
                         await foto.CopyToAsync(stream);
                     }
+
                     // redireciona o utilizador para a View Index
                     return RedirectToAction(nameof(Index));
                     }
@@ -186,6 +189,9 @@ namespace Watch_List.Controllers
                 }
 
             }
+           
+            ViewData["ListFilmes"] = new SelectList(_context.Filme.OrderBy(c => c.Titulo), "Id", "Titulo", foto);
+
             return View(filme);
             
         }
@@ -204,9 +210,13 @@ namespace Watch_List.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["ListFilmes"] = new SelectList(_context.Filme.OrderBy(c => c.Titulo), "Id", "Titulo", filme.Poster);
+
             // guardar o ID do objeto enviado para o browser
             // através de uma variável de sessão
             HttpContext.Session.SetInt32("NumFotoEmEdicao", filme.Id);
+
             return View(filme);
         }
 

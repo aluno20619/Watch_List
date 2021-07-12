@@ -51,6 +51,7 @@ namespace Watch_List.Controllers
         [Authorize(Roles = "Funcionario,Gestor")]
         public IActionResult Create()
         {
+           
             return View();
         }
 
@@ -61,6 +62,7 @@ namespace Watch_List.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Tarefa")] Profissao profissao)
         {
+            
             if (ModelState.IsValid)
             {
                 _context.Add(profissao);

@@ -13,16 +13,66 @@ using System.Linq;
 using System.Threading.Tasks;
 using Watch_List.Data;
 
+
 namespace Watch_List
 {
+
     public class Startup
     {
+
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            
         }
 
         public IConfiguration Configuration { get; }
+
+
+        public async Task CreateGestorAsync(WatchListDbContext context, UserManager<ApplicationUser> userManager)
+        {
+
+
+
+            const string nome = "gestor";
+            const string email = "gestor@gestor.com";
+            const string password = "98w6kB.RWUS5a2P";
+
+
+
+            var user = new ApplicationUser
+            {
+                UserName = email,
+                Email = email,
+                DataRegisto = DateTime.Now,
+                EmailConfirmed = true, // o email está confirmado
+            };
+            if (!userManager.Users.Contains<ApplicationUser>(user))
+            {
+                var util = new Watch_List.Models.Utilizador
+
+                {
+                    Email = email,
+                    Id = 1,
+                    Nome = nome,
+                    UtilIdFK = user.Id,
+                };
+                var result = await userManager.CreateAsync(user, password);
+
+                if (result.Succeeded)
+                {
+
+
+                    await userManager.AddToRoleAsync(user, "Gestor");
+
+                }
+                context.Add(context.Utilizador); // adicionar o utilizador
+                await context.SaveChangesAsync();
+            }
+
+
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -42,15 +92,6 @@ namespace Watch_List
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             // deixa -se  de referir 'IdentityUser' e passa-se a usar 'ApplicationUser'
-            //services.AddDefaultIdentity<ApplicationUser>(options =>
-            //              options.SignIn.RequireConfirmedAccount = true)
-            //                     .AddRoles<IdentityRole>()  // ativa o uso de Roles
-            //                     .AddEntityFrameworkStores<WatchListDbContext>();
-            //services.AddControllersWithViews();
-
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //   .AddEntityFrameworkStores<WatchListDbContext>();
-            //services.AddControllersWithViews();
 
             services.AddDefaultIdentity<ApplicationUser>(options =>
                           options.SignIn.RequireConfirmedAccount = true)

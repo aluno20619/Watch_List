@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Watch_List.Data;
@@ -32,12 +33,15 @@ namespace Watch_List.Areas.Identity.Pages.Account
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            WatchListDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
+
         }
 
         [BindProperty]
@@ -50,10 +54,10 @@ namespace Watch_List.Areas.Identity.Pages.Account
         public class InputModel
         {
             
-            [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
-            [StringLength(32, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
-            [Display(Name = "Nome de utilizador")]
-            public string UserName { get; set; }
+            //[Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+            //[StringLength(32, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
+            //[Display(Name = "Nome de utilizador")]
+            //public string UserName { get; set; }
 
             [Required]
             [EmailAddress]
@@ -75,11 +79,13 @@ namespace Watch_List.Areas.Identity.Pages.Account
             /// <summary>
             /// permitir a recolha dos dados do utilizador
             /// </summary>
-           // public Utilizador Utilizador { get; set; }
+            public Utilizador Utilizador { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -99,9 +105,10 @@ namespace Watch_List.Areas.Identity.Pages.Account
            
             {
                 var user = new ApplicationUser {
-                    UserName = Input.UserName, 
+                    UserName = Input.Email, 
                     Email = Input.Email,
-                    DataRegisto = DateTime.Now 
+                    DataRegisto = DateTime.Now,
+                    EmailConfirmed = true, // o email está confirmado
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -114,59 +121,63 @@ namespace Watch_List.Areas.Identity.Pages.Account
                     //*************************************************************
                     // Guardar os dados do Utilizador
                     //*************************************************************
-                    // preparar os dados do Criador para serem adicionados à BD
-                    //Input.Utilizador.Email = Input.Email; 
+                    // preparar os dados do utilizador para serem adicionados à BD
+                    
 
-                    //Input.Utilizador.UtilIdFK = user.Id;  // adicionar o ID do utilizador,
-                    //                                      // para formar uma 'ponte' (foreign key) entre
-                    //                                      // os dados da autenticação e os dados do 'negócio'
+                    Input.Utilizador.Email = Input.Email;
 
-                    //Input.Utilizador.Id = 1;
+                    Input.Utilizador.UtilIdFK = user.Id;  // adicionar o ID do utilizador,
+                                                          // para formar uma 'ponte' (foreign key) entre
+                                                          // os dados da autenticação e os dados do 'negócio'
+
+
                     // estamos em condições de guardar os dados na BD
                     try
                     {
 
 
 
-                        //    _context.Add(Input.Utilizador); // adicionar o utilizador
+                           _context.Add(Input.Utilizador); // adicionar o utilizador
                         await _context.SaveChangesAsync();
+
+                       
 
                         // Enviar para o utilizador para a página de confirmação da criaçao de Registo
                         return RedirectToPage("RegisterConfirmation");
-                    }
-                    catch (Exception)
-                    {
-                        // houve um erro na criação dos dados do utilizador
-                        // Mas, o USER já foi criado na BD
-                        // é efetuado o Roolback da ação
-                        await _userManager.DeleteAsync(user);
-
-                        // avisar que houve um erro
-                        ModelState.AddModelError("", "Ocorreu um erro na criação de dados");
-                    }
-
-                    /*Codigo default*/
-                    //    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    //    var callbackUrl = Url.Page(
-                    //        "/Account/ConfirmEmail",
-                    //        pageHandler: null,
-                    //        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                    //        protocol: Request.Scheme);
-
-                    //    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    //    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    //    {
-                    //        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    //    }
-                    //    else
-                    //    {
-                    //        await _signInManager.SignInAsync(user, isPersistent: false);
-                    //        return LocalRedirect(returnUrl);
-                    //    }
                 }
+                    catch (Exception)
+                {
+                    // houve um erro na criação dos dados do utilizador
+                    // Mas, o USER já foi criado na BD
+                    // é efetuado o Roolback da ação
+                    await _userManager.DeleteAsync(user);
+
+                    // avisar que houve um erro
+                    ModelState.AddModelError("", "Ocorreu um erro na criação de dados");
+                }
+
+                /*Codigo default*/
+                //    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                //    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                //    var callbackUrl = Url.Page(
+                //        "/Account/ConfirmEmail",
+                //        pageHandler: null,
+                //        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                //        protocol: Request.Scheme);
+
+                //    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                //        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                //    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                //    {
+                //        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                //    }
+                //    else
+                //    {
+                //        await _signInManager.SignInAsync(user, isPersistent: false);
+                //        return LocalRedirect(returnUrl);
+                //    }
+            }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

@@ -17,9 +17,9 @@
 
 
             <div class="form-group">
-                <label asp-for="Input.UserName"></label>
-                <input asp-for="Input.UserName" class="form-control" />
-                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                <label asp-for="Input.Utilizador.Nome"></label>
+                <input asp-for="Input.Utilizador.Nome" class="form-control" />
+                <span asp-validation-for="Input.Utilizador.Nome" class="text-danger"></span>
             </div>
 
 
@@ -43,14 +43,15 @@
 
                 @if (User.IsInRole("Gestor"))
                 {
-                        /* Colocar aqui uma lista de utilIdFK*/
+                    @*Escolher um role
+                        <div class="form-group">
+                        <label  class="control-label"></label>
+                        <select  class="form-control" asp-items="ViewBag.RoleFK"></select>
+                        <span  class="text-danger"></span>
+                    </div>*@
                 }
             }
-            @*<div class="form-group">
-            <label asp-for="Input.Utilizador.UtilIdFK"></label>
-            <input asp-for="Input.Utilizador.UtilIdFK" class="form-control" />
-            <span asp-validation-for="Input.Utilizador.UtilIdFK" class="text-danger"></span>
-        </div>*@
+
 
 
 

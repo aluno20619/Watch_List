@@ -14,7 +14,7 @@ using Watch_List.Models;
 
 namespace Watch_List.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class PessoasController : Controller
     {
         /// <summary>
@@ -85,9 +85,15 @@ namespace Watch_List.Controllers
         /// </summary>
         /// <returns></returns>
         // GET: Pessoas/Create
-        [Authorize(Roles = "Funcionario,Gestor")]
+        //[Authorize(Roles = "Funcionario,Gestor")]
         public IActionResult Create()
         {
+            var profissao = (from pr in _context.Profissao
+                           join p in _context.Pessoa on pr.Id equals p.ProfissaoFK
+                             select pr)
+                 .OrderBy(pr => pr.Tarefa);
+
+            ViewData["ProFK"] = new SelectList(profissao, "Id", "Tarefa");
             return View();
         }
 
@@ -96,9 +102,22 @@ namespace Watch_List.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Funcionario,Gestor")]
+        //[Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Create([Bind("Id,Nome,Foto,DataNasc,DataObi,DataInic,Nacionalidade,ProfissaoFK")] Pessoa pessoa, IFormFile imagem)
         {
+            if (pessoa.ProfissaoFK < 0)
+            {
+                // não foi escolhido uma profissao válida 
+                ModelState.AddModelError("", "Não se esqueça de escolher uma profissão...");
+                // devolver o controlo à View
+                var profissao = (from pr in _context.Profissao
+                                 join p in _context.Pessoa on pr.Id equals p.ProfissaoFK
+                                 select pr)
+                .OrderBy(pr => pr.Tarefa);
+
+                ViewData["ProFK"] = new SelectList(profissao, "Id", "Tarefa");
+                return View(pessoa);
+            }
             // var auxiliar
             string caminhoCompleto = "";
 
@@ -108,7 +127,14 @@ namespace Watch_List.Controllers
                // não há ficheiro
                // adicionar msg de erro
                 ModelState.AddModelError("", "Adicione uma fotografia, por favor");
-               // devolver o controlo à View
+                // devolver o controlo à View
+                var profissao = (from pr in _context.Profissao
+                                 join p in _context.Pessoa on pr.Id equals p.ProfissaoFK
+                                 select pr)
+                 .OrderBy(pr => pr.Tarefa);
+
+                ViewData["ProFK"] = new SelectList(profissao, "Id", "Tarefa");
+
                 return View(pessoa);
                 //pessoa.Foto = "noimage.png";
             }
@@ -139,6 +165,12 @@ namespace Watch_List.Controllers
                     // adicionar msg de erro
                     ModelState.AddModelError("", "Só pode escolher uma imagem");
                     // devolver o controlo à View
+                    var profissao = (from pr in _context.Profissao
+                                     join p in _context.Pessoa on pr.Id equals p.ProfissaoFK
+                                     select pr)
+                     .OrderBy(pr => pr.Tarefa);
+
+                    ViewData["ProFK"] = new SelectList(profissao, "Id", "Tarefa");
                     return View(pessoa);
                 }
             }
@@ -161,7 +193,7 @@ namespace Watch_List.Controllers
 
                 }
         }
-
+            ViewData["ProFK"] = new SelectList(_context.Profissao.OrderBy(pr => pr.Tarefa), "Id", "Tarefa", pessoa.ProfissaoFK);
 
             return View(pessoa);
         }
@@ -172,7 +204,7 @@ namespace Watch_List.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         // GET: Pessoas/Edit/5
-        [Authorize(Roles = "Funcionario,Gestor")]
+        //[Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -180,11 +212,14 @@ namespace Watch_List.Controllers
                 return NotFound();
             }
 
+
             var pessoa = await _context.Pessoa.FindAsync(id);
             if (pessoa == null)
             {
                 return NotFound();
             }
+            ViewData["ProFK"] = new SelectList(_context.Profissao.OrderBy(pr => pr.Tarefa), "Id", "Tarefa", pessoa.ProfissaoFK);
+
             // guardar o ID do objeto enviado para o browser
             // através de uma variável de sessão
             HttpContext.Session.SetInt32("NumFotoEmEdicao", pessoa.Id);
@@ -196,7 +231,7 @@ namespace Watch_List.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Funcionario,Gestor")]
+        //[Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Foto,DataNasc,DataObi,DataInic,Nacionalidade,ProfissaoFK")] Pessoa pessoa)
         {
             if (id != pessoa.Id)
@@ -238,7 +273,7 @@ namespace Watch_List.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-           
+            ViewData["ProFK"] = new SelectList(_context.Profissao.OrderBy(pr => pr.Tarefa), "Id", "Tarefa", pessoa.ProfissaoFK);
             return View(pessoa);
         }
 

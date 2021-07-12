@@ -22,6 +22,7 @@ namespace Watch_List.Models
         [MaxLength(10, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
         public string Estado { get; set; }
 
+       
 
         //***********************************************************************
         /// <summary>
@@ -30,7 +31,7 @@ namespace Watch_List.Models
         /// //***********************************************************************
         [ForeignKey(nameof(Utilizador))]
         [Display(Name = "Utilizador")]
-        public  int UtilFK { get; set; }
+        public int  UtilFK { get; set; }
         public Utilizador Utilizador { get; set; }
 
         //***********************************************************************

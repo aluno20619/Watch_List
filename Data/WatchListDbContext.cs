@@ -12,34 +12,54 @@ namespace Watch_List.Data
 {
     public class ApplicationUser : IdentityUser
     {
-       
-
         /// <summary>
         /// recolhe a data de registo de um utilizador
         /// </summary>
         public DateTime DataRegisto { get; set; }
 
-       
     }
-
     public class WatchListDbContext : IdentityDbContext<ApplicationUser>
     {
+
+       
         public WatchListDbContext(DbContextOptions<WatchListDbContext> options)
             : base(options)
         { }
-        
+        private void createUser(ModelBuilder modelBuilder) {
+
+            ApplicationUser user = new ApplicationUser()
+            {
+                Id = "8e445865-a24d-4543-a6c6-9443d048cdb9", // primary key
+                UserName = "gestor",
+                NormalizedUserName = "GESTOR",
+                Email = "gestor@gestor.com",
+
+                DataRegisto = DateTime.Now,
+                EmailConfirmed = true, // o email está confirmado
+            };
+
+            PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
+            user.PasswordHash = passwordHasher.HashPassword(user, "Aulas123!");
+
+            
+
+            modelBuilder.Entity<ApplicationUser>().HasData(user);
+
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-           
+
             modelBuilder.Entity<IdentityRole>().HasData(
                new IdentityRole { Id = "m", Name = "Membro", NormalizedName = "MEMBRO" },
                new IdentityRole { Id = "f", Name = "Funcionario", NormalizedName = "FUNCIONARIO" },
                new IdentityRole { Id = "g", Name = "Gestor", NormalizedName = "GESTOR" }
            );
 
-           
-            
+            this.createUser(modelBuilder);
+
+
+
 
             /// <summary>
             ///  UmParaMuitos e MuitosParaMuitos restirar o Cascade 
@@ -77,6 +97,14 @@ namespace Watch_List.Data
             modelBuilder.Entity<Filme>().HasData(
                new Filme {Id = 1, Titulo = "O Castelo Andante", Ano = 2004, Poster = "howlsmovingcastle.jpg", Resumo = "Sophie encontra um feiticeiro chamado Howl a caminho de visitar a sua irmã Lettie. Ao regressar a casa, a Bruxa do Nada aparece e transforma a numa mulher de noventa anos de idade. Em busca de quebrar a maldição, Sophie sai de casa e parte para o campo para encontrar o castelo andante que pertence ao Howl.", Trailer = "https://www.youtube.com/watch?v=iwROgK94zcM" }
            );
+
+            modelBuilder.Entity<Utilizador>().HasData(
+             new Utilizador { Id = 1, Email = "gestor@gestor.com", Nome = "gestor", UtilIdFK = "8e445865-a24d-4543-a6c6-9443d048cdb9" }
+           );
+
+            modelBuilder.Entity<UtilFilme>().HasData(
+            new UtilFilme{ Id = 1, Estado = "Para ver", FilFK=1, UtilFK=1 }
+          );
 
             modelBuilder.Entity<FilmeGenero>().HasData(
               new FilmeGenero {Id = 1, FilmeFK = 1, GeneroFK = 6}
