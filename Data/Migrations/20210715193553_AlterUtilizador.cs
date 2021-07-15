@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Watch_List.Data.Migrations
 {
-    public partial class BDCorrect : Migration
+    public partial class AlterUtilizador : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -88,18 +88,47 @@ namespace Watch_List.Data.Migrations
                 table: "FilmeGenero",
                 newName: "IX_FilmeGenero_GeneroFK");
 
-            migrationBuilder.AddColumn<int>(
+            migrationBuilder.AddColumn<string>(
                 name: "UtilFK",
                 table: "UtilFilme",
+                type: "nvarchar(450)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<int>(
+                name: "UtilizadorId",
+                table: "UtilFilme",
                 type: "int",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true);
 
             migrationBuilder.AddColumn<int>(
                 name: "PessoaId",
                 table: "Profissao",
                 type: "int",
                 nullable: true);
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "DataObi",
+                table: "Pessoa",
+                type: "datetime2",
+                nullable: true,
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2");
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "DataNasc",
+                table: "Pessoa",
+                type: "datetime2",
+                nullable: true,
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2");
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "DataInic",
+                table: "Pessoa",
+                type: "datetime2",
+                nullable: true,
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2");
 
             migrationBuilder.AddColumn<int>(
                 name: "ProfissaoFK",
@@ -115,6 +144,13 @@ namespace Watch_List.Data.Migrations
                 nullable: false,
                 defaultValue: 0)
                 .Annotation("SqlServer:Identity", "1, 1");
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "DataRegisto",
+                table: "AspNetUsers",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_FilmeGenero",
@@ -141,9 +177,9 @@ namespace Watch_List.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "m", "cc1d8372-7dbf-470c-a159-34155da73ab7", "Membro", "MEMBRO" },
-                    { "f", "a23513ab-28da-43cc-acdf-850b98e4634d", "Funcionario", "FUNCIONARIO" },
-                    { "g", "908f09c6-ecef-42a2-90ec-0921b9559990", "Gestor", "GESTOR" }
+                    { "m", "32ecabc0-58f8-4f77-a73d-de80615aa03d", "Membro", "MEMBRO" },
+                    { "f", "e5e5333f-c7a0-4694-a153-0c2135e8fc32", "Funcionario", "FUNCIONARIO" },
+                    { "g", "b6be4718-4c4e-401b-8a81-43c6177dc08c", "Gestor", "GESTOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -156,11 +192,12 @@ namespace Watch_List.Data.Migrations
                 columns: new[] { "Id", "Nome" },
                 values: new object[,]
                 {
+                    { 11, "Animação" },
                     { 10, "SFI" },
                     { 9, "Terror" },
-                    { 8, "Suspense" },
                     { 7, "Romance" },
                     { 6, "Fantasia" },
+                    { 8, "Suspense" },
                     { 4, "Documentário" },
                     { 3, "Comédia" },
                     { 2, "Ação" },
@@ -171,7 +208,13 @@ namespace Watch_List.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Pessoa",
                 columns: new[] { "Id", "DataInic", "DataNasc", "DataObi", "Foto", "Nacionalidade", "Nome", "ProfissaoFK", "ProfissoesId" },
-                values: new object[] { 1, new DateTime(1995, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1971, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "emilymortimer.jpg", "Reino Unido", "Emily Kathleen Anne Mortimer", 1, null });
+                values: new object[,]
+                {
+                    { 1, new DateTime(1995, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1971, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "emilymortimer.jpg", "Inglês", "Emily Kathleen Anne Mortimer", 1, null },
+                    { 2, new DateTime(1995, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1966, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "lucreciamarte.jpg", "Argentina", "Lucrecia Martel", 2, null },
+                    { 3, new DateTime(1963, 12, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1941, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "hayaomiyazaki.jpg", "Japonês", "Hayao Miyazaki", 3, null },
+                    { 4, new DateTime(1968, 7, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1948, 8, 19, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "toshiosuzuki.jpg", "Japonês", "Toshio Suzuki", 4, null }
+                });
 
             migrationBuilder.InsertData(
                 table: "Profissao",
@@ -187,17 +230,31 @@ namespace Watch_List.Data.Migrations
             migrationBuilder.InsertData(
                 table: "FilmeGenero",
                 columns: new[] { "Id", "FilmeFK", "GeneroFK" },
-                values: new object[] { 1, 1, 6 });
+                values: new object[,]
+                {
+                    { 1, 1, 6 },
+                    { 2, 1, 11 }
+                });
 
             migrationBuilder.InsertData(
                 table: "PessoaFilme",
                 columns: new[] { "Id", "FilmeFK", "PessoaFK", "Premio" },
-                values: new object[] { 1, 1, 1, null });
+                values: new object[,]
+                {
+                    { 1, 1, 1, null },
+                    { 2, 1, 3, null },
+                    { 3, 1, 4, null }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_UtilFilme_UtilFK",
                 table: "UtilFilme",
                 column: "UtilFK");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UtilFilme_UtilizadorId",
+                table: "UtilFilme",
+                column: "UtilizadorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Profissao_PessoaId",
@@ -290,9 +347,17 @@ namespace Watch_List.Data.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_UtilFilme_Utilizador_UtilFK",
+                name: "FK_UtilFilme_AspNetUsers_UtilFK",
                 table: "UtilFilme",
                 column: "UtilFK",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_UtilFilme_Utilizador_UtilizadorId",
+                table: "UtilFilme",
+                column: "UtilizadorId",
                 principalTable: "Utilizador",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
@@ -341,7 +406,11 @@ namespace Watch_List.Data.Migrations
                 table: "Profissao");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_UtilFilme_Utilizador_UtilFK",
+                name: "FK_UtilFilme_AspNetUsers_UtilFK",
+                table: "UtilFilme");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_UtilFilme_Utilizador_UtilizadorId",
                 table: "UtilFilme");
 
             migrationBuilder.DropTable(
@@ -349,6 +418,10 @@ namespace Watch_List.Data.Migrations
 
             migrationBuilder.DropIndex(
                 name: "IX_UtilFilme_UtilFK",
+                table: "UtilFilme");
+
+            migrationBuilder.DropIndex(
+                name: "IX_UtilFilme_UtilizadorId",
                 table: "UtilFilme");
 
             migrationBuilder.DropIndex(
@@ -383,6 +456,12 @@ namespace Watch_List.Data.Migrations
                 keyColumn: "Id",
                 keyColumnType: "int",
                 keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "FilmeGenero",
+                keyColumn: "Id",
+                keyColumnType: "int",
+                keyValue: 2);
 
             migrationBuilder.DeleteData(
                 table: "Genero",
@@ -430,9 +509,24 @@ namespace Watch_List.Data.Migrations
                 keyValue: 10);
 
             migrationBuilder.DeleteData(
+                table: "Pessoa",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
                 table: "PessoaFilme",
                 keyColumn: "Id",
                 keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "PessoaFilme",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "PessoaFilme",
+                keyColumn: "Id",
+                keyValue: 3);
 
             migrationBuilder.DeleteData(
                 table: "Profissao",
@@ -465,12 +559,31 @@ namespace Watch_List.Data.Migrations
                 keyValue: 6);
 
             migrationBuilder.DeleteData(
+                table: "Genero",
+                keyColumn: "Id",
+                keyValue: 11);
+
+            migrationBuilder.DeleteData(
                 table: "Pessoa",
                 keyColumn: "Id",
                 keyValue: 1);
 
+            migrationBuilder.DeleteData(
+                table: "Pessoa",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "Pessoa",
+                keyColumn: "Id",
+                keyValue: 4);
+
             migrationBuilder.DropColumn(
                 name: "UtilFK",
+                table: "UtilFilme");
+
+            migrationBuilder.DropColumn(
+                name: "UtilizadorId",
                 table: "UtilFilme");
 
             migrationBuilder.DropColumn(
@@ -484,6 +597,10 @@ namespace Watch_List.Data.Migrations
             migrationBuilder.DropColumn(
                 name: "Id",
                 table: "FilmeGenero");
+
+            migrationBuilder.DropColumn(
+                name: "DataRegisto",
+                table: "AspNetUsers");
 
             migrationBuilder.RenameColumn(
                 name: "ProfissoesId",
@@ -522,6 +639,36 @@ namespace Watch_List.Data.Migrations
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "DataObi",
+                table: "Pessoa",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "DataNasc",
+                table: "Pessoa",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "DataInic",
+                table: "Pessoa",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2",
+                oldNullable: true);
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_FilmeGenero",

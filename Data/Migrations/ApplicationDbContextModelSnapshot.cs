@@ -49,21 +49,21 @@ namespace Watch_List.Data.Migrations
                         new
                         {
                             Id = "m",
-                            ConcurrencyStamp = "2d36644a-ad00-48ed-a3f1-05a69895091e",
+                            ConcurrencyStamp = "32ecabc0-58f8-4f77-a73d-de80615aa03d",
                             Name = "Membro",
                             NormalizedName = "MEMBRO"
                         },
                         new
                         {
                             Id = "f",
-                            ConcurrencyStamp = "0694fd01-ad2f-403a-ac7d-315e2dd5ca66",
+                            ConcurrencyStamp = "e5e5333f-c7a0-4694-a153-0c2135e8fc32",
                             Name = "Funcionario",
                             NormalizedName = "FUNCIONARIO"
                         },
                         new
                         {
                             Id = "g",
-                            ConcurrencyStamp = "ff4317ab-3058-43f1-b439-7787a0acf591",
+                            ConcurrencyStamp = "b6be4718-4c4e-401b-8a81-43c6177dc08c",
                             Name = "Gestor",
                             NormalizedName = "GESTOR"
                         });
@@ -243,24 +243,6 @@ namespace Watch_List.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "2fb4c98b-5353-42a4-9442-7b7ed7119cea",
-                            DataRegisto = new DateTime(2021, 7, 12, 17, 41, 35, 82, DateTimeKind.Local).AddTicks(5838),
-                            Email = "gestor@gestor.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "GESTOR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP9cJ8GrzjUcaCAp0tMXMieiXnVpDFZUW8/nu44HjrDOb9+XhZHRT8RoWncZAjKD1g==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "168a79ef-01e3-4be6-b4d3-ef2e1caea865",
-                            TwoFactorEnabled = false,
-                            UserName = "gestor"
-                        });
                 });
 
             modelBuilder.Entity("Watch_List.Models.Filme", b =>
@@ -334,6 +316,12 @@ namespace Watch_List.Data.Migrations
                             Id = 1,
                             FilmeFK = 1,
                             GeneroFK = 6
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FilmeFK = 1,
+                            GeneroFK = 11
                         });
                 });
 
@@ -403,6 +391,11 @@ namespace Watch_List.Data.Migrations
                         {
                             Id = 10,
                             Nome = "SFI"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Nome = "Animação"
                         });
                 });
 
@@ -454,9 +447,39 @@ namespace Watch_List.Data.Migrations
                             DataInic = new DateTime(1995, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DataNasc = new DateTime(1971, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Foto = "emilymortimer.jpg",
-                            Nacionalidade = "Reino Unido",
+                            Nacionalidade = "Inglês",
                             Nome = "Emily Kathleen Anne Mortimer",
                             ProfissaoFK = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DataInic = new DateTime(1995, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataNasc = new DateTime(1966, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Foto = "lucreciamarte.jpg",
+                            Nacionalidade = "Argentina",
+                            Nome = "Lucrecia Martel",
+                            ProfissaoFK = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DataInic = new DateTime(1963, 12, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataNasc = new DateTime(1941, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Foto = "hayaomiyazaki.jpg",
+                            Nacionalidade = "Japonês",
+                            Nome = "Hayao Miyazaki",
+                            ProfissaoFK = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DataInic = new DateTime(1968, 7, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataNasc = new DateTime(1948, 8, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Foto = "toshiosuzuki.jpg",
+                            Nacionalidade = "Japonês",
+                            Nome = "Toshio Suzuki",
+                            ProfissaoFK = 4
                         });
                 });
 
@@ -491,6 +514,18 @@ namespace Watch_List.Data.Migrations
                             Id = 1,
                             FilmeFK = 1,
                             PessoaFK = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FilmeFK = 1,
+                            PessoaFK = 3
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FilmeFK = 1,
+                            PessoaFK = 4
                         });
                 });
 
@@ -551,7 +586,10 @@ namespace Watch_List.Data.Migrations
                     b.Property<int>("FilFK")
                         .HasColumnType("int");
 
-                    b.Property<int>("UtilFK")
+                    b.Property<string>("UtilFK")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("UtilizadorId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -560,16 +598,9 @@ namespace Watch_List.Data.Migrations
 
                     b.HasIndex("UtilFK");
 
-                    b.ToTable("UtilFilme");
+                    b.HasIndex("UtilizadorId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Estado = "Para ver",
-                            FilFK = 1,
-                            UtilFK = 1
-                        });
+                    b.ToTable("UtilFilme");
                 });
 
             modelBuilder.Entity("Watch_List.Models.Utilizador", b =>
@@ -594,15 +625,6 @@ namespace Watch_List.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Utilizador");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "gestor@gestor.com",
-                            Nome = "gestor",
-                            UtilIdFK = "8e445865-a24d-4543-a6c6-9443d048cdb9"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -720,15 +742,24 @@ namespace Watch_List.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Watch_List.Models.Utilizador", "Utilizador")
+                    b.HasOne("Watch_List.Data.ApplicationUser", "Utilizador")
                         .WithMany("ListaDeFilmes")
                         .HasForeignKey("UtilFK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Watch_List.Models.Utilizador", null)
+                        .WithMany("ListaDeFilmes")
+                        .HasForeignKey("UtilizadorId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Filme");
 
                     b.Navigation("Utilizador");
+                });
+
+            modelBuilder.Entity("Watch_List.Data.ApplicationUser", b =>
+                {
+                    b.Navigation("ListaDeFilmes");
                 });
 
             modelBuilder.Entity("Watch_List.Models.Filme", b =>

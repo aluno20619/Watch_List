@@ -1,34 +1,42 @@
 ﻿@model Watch_List.Models.Genero
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h1>Detalhes</h1>
+<h1>@ViewData["Title"]</h1>
 
 <div>
-  <h4>@Html.DisplayFor(model => model.Nome)</h4>
+    
+    <h4>@Html.DisplayFor(model => model.Nome)</h4>
     <hr />
     <dl class="row">
         @if (Model.ListaDeFilmes.Count == 0) { }
 
         else
         {
-        <dt>
-            Titulo
-        </dt>
+            <dt>
+                Titulo
+            </dt>
 
             @foreach (var fil in Model.ListaDeFilmes)
             {
-                <dd class="col-sm-2" style="text-align:left;">
-                    @fil.Filme.Titulo
-                </dd>
+    <dd class="col-sm-2" style="text-align:left;">
+        <img src="~/Imagens/@fil.Filme.Poster"
+             width="100"
+             alt="@fil.Filme.Titulo"
+             title="@fil.Filme.Titulo" />
+        
+    </dd>
             }
 
         }
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
-    <a asp-action="Index">Voltar à página anterior</a>
+    @if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> 
+    }
+<a asp-action="Index">Voltar à página anterior</a>
 </div>

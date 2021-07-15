@@ -116,45 +116,45 @@ namespace Watch_List.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    await _userManager.AddToRoleAsync(user,"Membro");
+                    await _userManager.AddToRoleAsync(user,"Gestor");
 
-                    //*************************************************************
-                    // Guardar os dados do Utilizador
-                    //*************************************************************
-                    // preparar os dados do utilizador para serem adicionados à BD
+                //    //*************************************************************
+                //    // Guardar os dados do Utilizador
+                //    //*************************************************************
+                //    // preparar os dados do utilizador para serem adicionados à BD
                     
 
-                    Input.Utilizador.Email = Input.Email;
+                //    Input.Utilizador.Email = Input.Email;
 
-                    Input.Utilizador.UtilIdFK = user.Id;  // adicionar o ID do utilizador,
-                                                          // para formar uma 'ponte' (foreign key) entre
-                                                          // os dados da autenticação e os dados do 'negócio'
-
-
-                    // estamos em condições de guardar os dados na BD
-                    try
-                    {
+                //    Input.Utilizador.UtilIdFK = user.Id;  // adicionar o ID do utilizador,
+                //                                          // para formar uma 'ponte' (foreign key) entre
+                //                                          // os dados da autenticação e os dados do 'negócio'
 
 
+                //    // estamos em condições de guardar os dados na BD
+                //    try
+                //    {
 
-                           _context.Add(Input.Utilizador); // adicionar o utilizador
-                        await _context.SaveChangesAsync();
+
+
+                //           _context.Add(Input.Utilizador); // adicionar o utilizador
+                //        await _context.SaveChangesAsync();
 
                        
 
-                        // Enviar para o utilizador para a página de confirmação da criaçao de Registo
-                        return RedirectToPage("RegisterConfirmation");
-                }
-                    catch (Exception)
-                {
-                    // houve um erro na criação dos dados do utilizador
-                    // Mas, o USER já foi criado na BD
-                    // é efetuado o Roolback da ação
-                    await _userManager.DeleteAsync(user);
+                //        // Enviar para o utilizador para a página de confirmação da criaçao de Registo
+                //        return RedirectToPage("RegisterConfirmation");
+                //}
+                //    catch (Exception)
+                //{
+                //    // houve um erro na criação dos dados do utilizador
+                //    // Mas, o USER já foi criado na BD
+                //    // é efetuado o Roolback da ação
+                //    await _userManager.DeleteAsync(user);
 
-                    // avisar que houve um erro
-                    ModelState.AddModelError("", "Ocorreu um erro na criação de dados");
-                }
+                //    // avisar que houve um erro
+                //    ModelState.AddModelError("", "Ocorreu um erro na criação de dados");
+                //}
 
                 /*Codigo default*/
                 //    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

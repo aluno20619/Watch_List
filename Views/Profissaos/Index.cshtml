@@ -1,35 +1,43 @@
 ﻿@model IEnumerable<Watch_List.Models.Profissao>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Profissões";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Criar Novo</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Tarefa)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tarefa)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Apagar</a>
-            </td>
-        </tr>
+<h1>@ViewData["Title"]</h1>
+@if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
+{
+    <p>
+        <a asp-action="Create">Criar Novo</a>
+    </p>
 }
-    </tbody>
-</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tarefa)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tarefa)
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id"> Apagar </a>
+                        }
+
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

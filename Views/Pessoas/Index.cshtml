@@ -1,79 +1,110 @@
 ﻿@model IEnumerable<Watch_List.Models.Pessoa>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Pessoas";
 }
 
-<h1>Pessoas</h1>
+<h1>@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Criar Novo</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Foto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataNasc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataObi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataInic)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nacionalidade)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Foto)"
-                     width="50"
-                     alt="@Html.DisplayFor(modelItem => item.Nome)"
-                     title="@Html.DisplayFor(modelItem => item.Nome)" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataNasc)
-            </td>
-            @if (item.DataObi.ToString() != "01/01/0001 00:00:00")
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataObi)
-                </td>
-            }
-            else
-            {
-                <td>
-                    -
-                </td>
-            }
-            <td>
-                @Html.DisplayFor(modelItem => item.DataInic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nacionalidade)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Apagar</a>
-            </td>
-        </tr>
+@if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
+{
+    <p>
+        <a asp-action="Create">Criar Novo</a>
+    </p>
+    <p>
+        <a  asp-area="" asp-controller="PessoaFilmes" asp-action="Create">Adicionar a um filme</a>
+    </p>
 }
-    </tbody>
-</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                
+                <th>
+                    @Html.DisplayNameFor(model => model.DataNasc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataObi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataInic)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nacionalidade)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Foto)"
+                             width="50"
+                             alt="@Html.DisplayFor(modelItem => item.Nome)"
+                             title="@Html.DisplayFor(modelItem => item.Nome)" />
+                    </td>
+                    @if (item.DataNasc == null)
+                    {
+
+
+                        <td>
+                            -
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DataNasc)
+                        </td>
+                    }
+
+                    @if (item.DataObi == null)
+                    {
+                        <td>
+                            -
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DataObi)
+                        </td>
+                    }
+                    @if (item.DataInic == null)
+                    {
+                        <td>
+                            -
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DataInic)
+                        </td>
+                    }
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nacionalidade)
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id"> Apagar </a>
+                        }
+
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

@@ -1,12 +1,13 @@
 ﻿@model Watch_List.Models.Filme
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h1>Detalhes</h1>
+<h1>@ViewData["Title"]</h1>
 
 <div>
+
     <h4>@Html.DisplayFor(model => model.Titulo)</h4>
     <hr />
 
@@ -19,31 +20,70 @@
                      title="@Html.DisplayFor(model => model.Poster)" />
             </td>
 
-        <td column-span="4">
-            @Html.DisplayNameFor(model => model.Resumo)
-        </td>
+            <td column-span="4">
+                @Html.DisplayNameFor(model => model.Resumo)
+            </td>
 
-        <td>
-            @Html.DisplayFor(model => model.Resumo)
-        </td>
-        </tr>
-
-        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Resumo)
+            </td>
             <td>
                 @Html.DisplayNameFor(model => model.Ano) : @Html.DisplayFor(model => model.Ano)
 
             </td>
-            <tr>
+            <td>
                 @Html.DisplayNameFor(model => model.Trailer)
-            </tr>
+            </td>
             <td>
                 @Html.DisplayFor(model => model.Trailer)
             </td>
         </tr>
+    </table>
+    <dl class="row">
+        @if (Model.ListaDeGeneros.Count == 0) { }
 
+        else
+        {
 
+            @foreach (var gen in Model.ListaDeGeneros)
+            {
+                <dt class="col-sm-2" style="text-align:left;">
+                    @gen.Genero.Nome
+                </dt>
+            }
+
+        }
+    </dl>
+        <dl class="row">
+            @if (Model.ListaDePessoas.Count == 0) { }
+
+            else
+            {
+                <dt>
+                    Elenco
+                </dt>
+
+                @foreach (var pess in Model.ListaDePessoas)
+                {
+                    <dd class="col-sm-2" style="text-align:left;">
+                        <img src="~/Imagens/@pess.Pessoa.Foto"
+                             width="100"
+                             alt="@pess.Pessoa.Nome"
+                             title="@pess.Pessoa.Nome" />
+            
+                    </dd>
+                }
+
+            }
+        
+    </dl>
+        
+    
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    @if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> 
+    }
     <a asp-action="Index">Voltar à página anterior</a>
 </div>

@@ -26,13 +26,13 @@ namespace Watch_List.Models
 
         //***********************************************************************
         /// <summary>
-        /// definição da chave forasteira (FK) que referencia a classe Utilizador
+        /// definição da chave forasteira (FK) que referencia a classe ApplicationUser
         /// </summary>
         /// //***********************************************************************
         [ForeignKey(nameof(Utilizador))]
         [Display(Name = "Utilizador")]
-        public int  UtilFK { get; set; }
-        public Utilizador Utilizador { get; set; }
+        public string  UtilFK { get; set; }
+        public Watch_List.Data.ApplicationUser Utilizador { get; set; }
 
         //***********************************************************************
         /// <summary>
