@@ -57,10 +57,8 @@ namespace Watch_List.Controllers
 
             //Filmes assosciados a um utilizador
             var filmes = await (from f in _context.Filme
-                        join uf in _context.UtilFilme on f.Id equals uf.FilFK
-                        join u in _context.Users on uf.UtilFK equals u.Id
-                        where u.Id == _userManager.GetUserId(User)
-                        where u.Id == idDaPessoaAutenticada
+                          join uf in _context.UtilFilme on f.Id equals uf.FilFK                         
+                          where uf.UtilIdFK == idDaPessoaAutenticada
                           select f.Id).ToListAsync();
 
             // transportar os dois objetos para a View
@@ -106,8 +104,7 @@ namespace Watch_List.Controllers
             // Lista de filmes do utilizador autenticado
             var filmes = (from f in _context.Filme
                           join uf in _context.UtilFilme on f.Id equals uf.FilFK
-                          join u in _context.Users on uf.UtilFK equals u.Id
-                          where u.Id == _userManager.GetUserId(User)
+                          where uf.UtilIdFK == _userManager.GetUserId(User)
                           select f).OrderBy(f => f.Titulo);
             ViewData["ListFilmes"] = new SelectList(filmes, "Id", "Titulo");
 

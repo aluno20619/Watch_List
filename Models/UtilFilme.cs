@@ -22,17 +22,22 @@ namespace Watch_List.Models
         [MaxLength(10, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
         public string Estado { get; set; }
 
-       
+        //***********************************************************************
+        /// <summary>
+        /// definição da chave forasteira (FK) que referencia a classe Identity User
+        /// </summary>
+        //***********************************************************************
+        public string UtilIdFK { get; set; }
 
         //***********************************************************************
         /// <summary>
-        /// definição da chave forasteira (FK) que referencia a classe ApplicationUser
+        /// definição da chave forasteira (FK) que referencia a classe Utilizador
         /// </summary>
         /// //***********************************************************************
-        [ForeignKey(nameof(Utilizador))]
-        [Display(Name = "Utilizador")]
-        public string  UtilFK { get; set; }
-        public Watch_List.Data.ApplicationUser Utilizador { get; set; }
+        //[ForeignKey(nameof(Utilizador))]
+        //[Display(Name = "Utilizador")]
+        //public string  UtilFK { get; set; }
+        //public Utilizador Utilizador { get; set; }
 
         //***********************************************************************
         /// <summary>

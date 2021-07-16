@@ -30,19 +30,7 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            @if (SignInManager.IsSignedIn(User))
-            {
 
-                @if (User.IsInRole("Gestor"))
-                {
-                    @*Escolher um role
-                        <div class="form-group">
-                        <label  class="control-label"></label>
-                        <select  class="form-control" asp-items="ViewBag.RoleFK"></select>
-                        <span  class="text-danger"></span>
-                    </div>*@
-                }
-            }
 
 
 
@@ -50,6 +38,7 @@
             <button type="submit" class="btn btn-primary">Registar</button>
         </form>
     </div>
+</div>
 
     @section Scripts {
         <partial name="_ValidationScriptsPartial" />

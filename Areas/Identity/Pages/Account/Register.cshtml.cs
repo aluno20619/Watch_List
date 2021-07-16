@@ -53,11 +53,13 @@ namespace Watch_List.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            
+
             //[Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
             //[StringLength(32, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
             //[Display(Name = "Nome de utilizador")]
             //public string UserName { get; set; }
+
+            
 
             [Required]
             [EmailAddress]
@@ -84,7 +86,7 @@ namespace Watch_List.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            
+           
 
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -115,7 +117,7 @@ namespace Watch_List.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
+                   
                     await _userManager.AddToRoleAsync(user,"Gestor");
 
                 //    //*************************************************************

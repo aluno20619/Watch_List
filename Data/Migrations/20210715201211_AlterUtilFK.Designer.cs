@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Watch_List.Data;
 
 namespace Watch_List.Data.Migrations
 {
     [DbContext(typeof(WatchListDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210715201211_AlterUtilFK")]
+    partial class AlterUtilFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,21 +51,21 @@ namespace Watch_List.Data.Migrations
                         new
                         {
                             Id = "m",
-                            ConcurrencyStamp = "33b1aeba-0055-45f6-ac29-7fa485f696da",
+                            ConcurrencyStamp = "9277ed8d-170d-4558-9406-5aa55f761505",
                             Name = "Membro",
                             NormalizedName = "MEMBRO"
                         },
                         new
                         {
                             Id = "f",
-                            ConcurrencyStamp = "99c27b50-fd65-45ca-9944-14b15a81e549",
+                            ConcurrencyStamp = "989ad646-a184-4080-aceb-4e413b34dac8",
                             Name = "Funcionario",
                             NormalizedName = "FUNCIONARIO"
                         },
                         new
                         {
                             Id = "g",
-                            ConcurrencyStamp = "b9219f56-0f8b-47c7-9326-31e9a5eaf48a",
+                            ConcurrencyStamp = "843a3c0c-1ba4-4fcf-af77-1db616736a5e",
                             Name = "Gestor",
                             NormalizedName = "GESTOR"
                         });

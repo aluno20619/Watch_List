@@ -85,7 +85,7 @@ namespace Watch_List.Controllers
         /// </summary>
         /// <returns></returns>
         // GET: Pessoas/Create
-        //[Authorize(Roles = "Funcionario,Gestor")]
+        [Authorize(Roles = "Funcionario,Gestor")]
         public IActionResult Create()
         {
             var profissao = (from pr in _context.Profissao
@@ -102,7 +102,7 @@ namespace Watch_List.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Funcionario,Gestor")]
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Create([Bind("Id,Nome,Foto,DataNasc,DataObi,DataInic,Nacionalidade,ProfissaoFK")] Pessoa pessoa, IFormFile imagem)
         {
             if (pessoa.ProfissaoFK < 0)
@@ -204,7 +204,7 @@ namespace Watch_List.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         // GET: Pessoas/Edit/5
-        //[Authorize(Roles = "Funcionario,Gestor")]
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -231,7 +231,7 @@ namespace Watch_List.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Funcionario,Gestor")]
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Foto,DataNasc,DataObi,DataInic,Nacionalidade,ProfissaoFK")] Pessoa pessoa)
         {
             if (id != pessoa.Id)

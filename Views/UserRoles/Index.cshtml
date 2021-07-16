@@ -1,0 +1,33 @@
+﻿@*source : https://codewithmukesh.com/blog/user-management-in-aspnet-core-mvc/*@
+
+
+@model List<Watch_List.Models.UserRolesViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>User Roles</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+            <th>Email</th>
+            <th>Funções</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+ 
+                <td>@user.Email</td>
+                @*separador,  membros da lista*@
+                <td>@string.Join(" , ", user.Roles.ToList())</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="UserRoles" asp-action="Manage" asp-route-userId="@user.UserId">Gestão de função</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -15,8 +15,22 @@ namespace Watch_List.Models {
         /// </summary>
         public ICollection<int> ListaDeFilmes { get; set; }
     }
-
    
+    //source :https://codewithmukesh.com/blog/user-management-in-aspnet-core-mvc/
+    public class UserRolesViewModel
+    {
+        public string UserId { get; set; }
+        public string Email { get; set; }
+        public IEnumerable<string> Roles { get; set; }
+    }
+
+    //source :https://codewithmukesh.com/blog/user-management-in-aspnet-core-mvc/
+    public class ManageUserRolesViewModel
+    {
+        public string RoleId { get; set; }
+        public string RoleName { get; set; }
+        public bool Selected { get; set; }
+    }
 
 
     public class ErrorViewModel
