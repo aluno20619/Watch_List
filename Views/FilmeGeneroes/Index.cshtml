@@ -5,7 +5,7 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-if (@User.IsInRole("Gestor") || @User.IsInRole("Funcionario"))
+@if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
 {
 <p>
     <a asp-action="Create">Criar Novo</a>
@@ -28,6 +28,11 @@ if (@User.IsInRole("Gestor") || @User.IsInRole("Funcionario"))
         {
         <tr>
             <td>
+                <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Filme.Poster)"
+                     width="50"
+                     alt="@Html.DisplayFor(modelItem => item.Filme.Poster)"
+                     title="@Html.DisplayFor(modelItem => item.Filme.Poster)" />
+                <br />
                 @Html.DisplayFor(modelItem => item.Filme.Titulo)
             </td>
             <td>

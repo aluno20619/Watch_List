@@ -6,7 +6,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
-if (@User.IsInRole("Gestor") || @User.IsInRole("Funcionario"))
+@if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
 {
 <p>
     <a asp-action="Create">Criar Novo</a>
@@ -15,15 +15,14 @@ if (@User.IsInRole("Gestor") || @User.IsInRole("Funcionario"))
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Premio)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Filme)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Pessoa)
             </th>
+           
             <th></th>
         </tr>
     </thead>
@@ -31,13 +30,21 @@ if (@User.IsInRole("Gestor") || @User.IsInRole("Funcionario"))
         @foreach (var item in Model)
         {
         <tr>
+            
             <td>
-                @Html.DisplayFor(modelItem => item.Premio)
-            </td>
-            <td>
+                <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Filme.Poster)"
+                     width="50"
+                     alt="@Html.DisplayFor(modelItem => item.Filme.Poster)"
+                     title="@Html.DisplayFor(modelItem => item.Filme.Poster)" />
+                <br />
                 @Html.DisplayFor(modelItem => item.Filme.Titulo)
             </td>
             <td>
+                <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Pessoa.Foto)"
+                     width="50"
+                     alt="@Html.DisplayFor(modelItem => item.Pessoa.Foto)"
+                     title="@Html.DisplayFor(modelItem => item.Pessoa.Foto)" />
+                <br />
                 @Html.DisplayFor(modelItem => item.Pessoa.Nome)
             </td>
             <td>
@@ -45,9 +52,10 @@ if (@User.IsInRole("Gestor") || @User.IsInRole("Funcionario"))
                 {
                     <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
                     <a asp-action="Delete" asp-route-id="@item.Id"> Apagar </a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
                 }
 
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+
             </td>
         </tr>
         }

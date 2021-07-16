@@ -15,28 +15,23 @@
         <tr>
             <td>
                 <img src="~/Imagens/@Html.DisplayFor(model => model.Poster)"
-                     width="500"
+                     width="200"
                      alt="@Html.DisplayFor(model => model.Poster)"
                      title="@Html.DisplayFor(model => model.Poster)" />
+                <br />
+                @Html.DisplayNameFor(model => model.Ano) : @Html.DisplayFor(model => model.Ano)
+                <br />
+                @Html.DisplayNameFor(model => model.Trailer) :  @Html.DisplayFor(model => model.Trailer)
+
             </td>
 
             <td column-span="4">
                 @Html.DisplayNameFor(model => model.Resumo)
-            </td>
-
-            <td>
+                <br />
                 @Html.DisplayFor(model => model.Resumo)
             </td>
-            <td>
-                @Html.DisplayNameFor(model => model.Ano) : @Html.DisplayFor(model => model.Ano)
 
-            </td>
-            <td>
-                @Html.DisplayNameFor(model => model.Trailer)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Trailer)
-            </td>
+           
         </tr>
     </table>
     <dl class="row">

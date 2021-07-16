@@ -49,26 +49,8 @@ namespace Watch_List.Controllers
         // GET: Filmes
         public async Task<IActionResult> Index()
         {
+
             
-
-
-            // var. auxiliar
-            string idDaPessoaAutenticada = _userManager.GetUserId(User);
-
-            //Filmes assosciados a um utilizador
-            var filmes = await (from f in _context.Filme
-                          join uf in _context.UtilFilme on f.Id equals uf.FilFK                         
-                          where uf.UtilIdFK == idDaPessoaAutenticada
-                          select f.Id).ToListAsync();
-
-            // transportar os dois objetos para a View
-            // iremos usar um ViewModel
-            var conta = new UtilizadoresFilmes
-            {
-                ListaDeFilmes = filmes
-
-            };
-
             // return View(filmes);
             return View(await _context.Filme.ToListAsync());
         }
@@ -101,12 +83,7 @@ namespace Watch_List.Controllers
         [Authorize(Roles = "Funcionario,Gestor")]
         public IActionResult Create()
         {
-            // Lista de filmes do utilizador autenticado
-            var filmes = (from f in _context.Filme
-                          join uf in _context.UtilFilme on f.Id equals uf.FilFK
-                          where uf.UtilIdFK == _userManager.GetUserId(User)
-                          select f).OrderBy(f => f.Titulo);
-            ViewData["ListFilmes"] = new SelectList(filmes, "Id", "Titulo");
+            
 
             return View();
         }

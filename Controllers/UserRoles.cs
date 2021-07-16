@@ -12,7 +12,7 @@ using Watch_List.Models;
 //source: https://codewithmukesh.com/blog/user-management-in-aspnet-core-mvc/ 
 namespace Watch_List.Controllers
 {
-    [Authorize]
+   
     [Authorize(Roles = "Gestor")]
     public class UserRoles : Controller
     {
