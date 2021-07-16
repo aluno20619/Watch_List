@@ -120,66 +120,66 @@ namespace Watch_List.Areas.Identity.Pages.Account
                    
                     await _userManager.AddToRoleAsync(user,"Gestor");
 
-                //    //*************************************************************
-                //    // Guardar os dados do Utilizador
-                //    //*************************************************************
-                //    // preparar os dados do utilizador para serem adicionados à BD
-                    
-
-                //    Input.Utilizador.Email = Input.Email;
-
-                //    Input.Utilizador.UtilIdFK = user.Id;  // adicionar o ID do utilizador,
-                //                                          // para formar uma 'ponte' (foreign key) entre
-                //                                          // os dados da autenticação e os dados do 'negócio'
+                    //    //*************************************************************
+                    //    // Guardar os dados do Utilizador
+                    //    //*************************************************************
+                    //    // preparar os dados do utilizador para serem adicionados à BD
 
 
-                //    // estamos em condições de guardar os dados na BD
-                //    try
-                //    {
+                    //    Input.Utilizador.Email = Input.Email;
+
+                    //    Input.Utilizador.UtilIdFK = user.Id;  // adicionar o ID do utilizador,
+                    //                                          // para formar uma 'ponte' (foreign key) entre
+                    //                                          // os dados da autenticação e os dados do 'negócio'
+
+
+                    //    // estamos em condições de guardar os dados na BD
+                    try
+                    {
 
 
 
-                //           _context.Add(Input.Utilizador); // adicionar o utilizador
-                //        await _context.SaveChangesAsync();
+                        //           _context.Add(Input.Utilizador); // adicionar o utilizador
+                        await _context.SaveChangesAsync();
 
-                       
 
-                //        // Enviar para o utilizador para a página de confirmação da criaçao de Registo
-                //        return RedirectToPage("RegisterConfirmation");
-                //}
-                //    catch (Exception)
-                //{
-                //    // houve um erro na criação dos dados do utilizador
-                //    // Mas, o USER já foi criado na BD
-                //    // é efetuado o Roolback da ação
-                //    await _userManager.DeleteAsync(user);
 
-                //    // avisar que houve um erro
-                //    ModelState.AddModelError("", "Ocorreu um erro na criação de dados");
-                //}
+                        // Enviar para o utilizador para a página de confirmação da criaçao de Registo
+                        return RedirectToPage("RegisterConfirmation");
+                    }
+                    catch (Exception)
+                    {
+                        
+                        // Mas, o USER já foi criado na BD
+                        // é efetuado o Roolback da ação
+                        await _userManager.DeleteAsync(user);
 
-                /*Codigo default*/
-                //    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                //    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                //    var callbackUrl = Url.Page(
-                //        "/Account/ConfirmEmail",
-                //        pageHandler: null,
-                //        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                //        protocol: Request.Scheme);
+                        // avisar que houve um erro
+                        ModelState.AddModelError("", "Ocorreu um erro na criação de dados");
+                    }
 
-                //    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                //        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    /*Codigo default*/
+                    //    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    //    var callbackUrl = Url.Page(
+                    //        "/Account/ConfirmEmail",
+                    //        pageHandler: null,
+                    //        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                    //        protocol: Request.Scheme);
 
-                //    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                //    {
-                //        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                //    }
-                //    else
-                //    {
-                //        await _signInManager.SignInAsync(user, isPersistent: false);
-                //        return LocalRedirect(returnUrl);
-                //    }
-            }
+                    //    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    //    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    //    {
+                    //        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                    //    }
+                    //    else
+                    //    {
+                    //        await _signInManager.SignInAsync(user, isPersistent: false);
+                    //        return LocalRedirect(returnUrl);
+                    //    }
+                }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

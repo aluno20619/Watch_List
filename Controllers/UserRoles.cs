@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Watch_List.Data;
 using Watch_List.Models;
 
+//source: https://codewithmukesh.com/blog/user-management-in-aspnet-core-mvc/ 
 namespace Watch_List.Controllers
 {
     [Authorize]

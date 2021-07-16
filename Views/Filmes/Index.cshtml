@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Watch_List.Models.Filme>
 
+
 @{
     ViewData["Title"] = "Filmes";
 }
@@ -29,36 +30,41 @@
                 @Html.DisplayNameFor(model => model.Ano)
             </th>
 
+
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Poster)"
-                         width="50"
-                         alt="@Html.DisplayFor(modelItem => item.Poster)"
-                         title="@Html.DisplayFor(modelItem => item.Poster)" />
-                    <br />
-                    @Html.DisplayFor(modelItem => item.Titulo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ano)
-                </td>
+        <tr>
+            <td>
+                <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Poster)"
+                     width="50"
+                     alt="@Html.DisplayFor(modelItem => item.Poster)"
+                     title="@Html.DisplayFor(modelItem => item.Poster)" />
+                <br />
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ano)
+            </td>
 
-                <td>
-                    @if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
-                    {
-                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id"> Apagar </a>
-                    }
 
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
 
-                </td>
-            </tr>
+            <td>
+                @if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id"> Apagar </a>
+                }
+
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>|
+                <a class="btn btn-primary" asp-controller="UtilFilmes" asp-action="Create">Adicionar à Lista</a>
+
+            </td>
+           
+        </tr>
         }
     </tbody>
 </table>

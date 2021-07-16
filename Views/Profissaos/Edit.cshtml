@@ -1,10 +1,10 @@
 ﻿@model Watch_List.Models.Profissao
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar";
 }
 
-<h1>Editar</h1>
+<h1>@ViewData["Title"]</h1>
 
 <h4>Profissao</h4>
 <hr />
@@ -19,7 +19,7 @@
                 <span asp-validation-for="Tarefa" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </form>
     </div>
