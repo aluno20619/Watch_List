@@ -2,7 +2,7 @@
 
 namespace Watch_List.Data.Migrations
 {
-    public partial class AdicaoRole : Migration
+    public partial class AlterDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,21 +11,21 @@ namespace Watch_List.Data.Migrations
                 keyColumn: "Id",
                 keyValue: "f",
                 column: "ConcurrencyStamp",
-                value: "99c27b50-fd65-45ca-9944-14b15a81e549");
+                value: "e6390f2e-fb2c-4e31-a5c7-a830babcf6fc");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "g",
                 column: "ConcurrencyStamp",
-                value: "b9219f56-0f8b-47c7-9326-31e9a5eaf48a");
+                value: "a54fc12b-560c-4244-b50d-a8bbdb9c0846");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "m",
                 column: "ConcurrencyStamp",
-                value: "33b1aeba-0055-45f6-ac29-7fa485f696da");
+                value: "ea206633-cb40-4181-a73c-5f634de0996d");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

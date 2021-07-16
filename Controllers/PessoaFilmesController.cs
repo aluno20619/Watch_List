@@ -40,6 +40,7 @@ namespace Watch_List.Controllers
             var pessoaFilme = await _context.PessoaFilme
                 .Include(p => p.Filme)
                 .Include(p => p.Pessoa)
+                
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pessoaFilme == null)
             {
@@ -72,7 +73,7 @@ namespace Watch_List.Controllers
             }
             ViewData["FilmeFK"] = new SelectList(_context.Filme, "Id", "Titulo", pessoaFilme.FilmeFK);
             ViewData["PessoaFK"] = new SelectList(_context.Pessoa, "Id", "Nome", pessoaFilme.PessoaFK);
-            return View(pessoaFilme);
+            return RedirectToAction("Index","Filmes");
         }
 
         // GET: PessoaFilmes/Edit/5

@@ -34,7 +34,7 @@ namespace Watch_List.Models
         /// <summary>
         /// Ano em que o fime estreou ou irá estrear
         /// </summary>
-        [MaxLength(4, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
+        //[MaxLength(2022, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
         public int Ano { get; set; }
 
         /// <summary>

@@ -10,10 +10,14 @@ namespace Watch_List.Models {
     public class UtilizadoresFilmes
     {
 
-        /// <summary>
-        /// lista dos IDs dos filmes associados à pessoa autenticada
-        /// </summary>
-        public ICollection<int> ListaDeFilmes { get; set; }
+        
+        public int Id { get; set; }
+        public int FilmeFK { get; set; }
+        public string Titulo { get; set; }
+        public string Poster { get; set; }
+        public string Estado { get; set; }
+        public int Ano { get; set; }
+       
     }
    
     //source :https://codewithmukesh.com/blog/user-management-in-aspnet-core-mvc/

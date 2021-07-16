@@ -83,6 +83,18 @@ namespace Watch_List.Data
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
+
+            modelBuilder.Entity<PessoaFilme>()
+              .HasOne<Pessoa>(x => x.Pessoa)
+              .WithMany(c => c.ListaDeFilmes)
+              .HasForeignKey(x => x.PessoaFK);
+
+            modelBuilder.Entity<PessoaFilme>()
+             .HasOne<Filme>(x => x.Filme)
+             .WithMany(c => c.ListaDePessoas)
+             .HasForeignKey(x => x.FilmeFK);
+
+
             modelBuilder.Entity<Profissao>().HasData(
                 new Profissao { Id = 1, Tarefa = "Actor"},
                 new Profissao { Id = 2, Tarefa = "Realizador"},

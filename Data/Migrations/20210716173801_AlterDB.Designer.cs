@@ -10,8 +10,8 @@ using Watch_List.Data;
 namespace Watch_List.Data.Migrations
 {
     [DbContext(typeof(WatchListDbContext))]
-    [Migration("20210715211808_AdicaoRole")]
-    partial class AdicaoRole
+    [Migration("20210716173801_AlterDB")]
+    partial class AlterDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,21 +51,21 @@ namespace Watch_List.Data.Migrations
                         new
                         {
                             Id = "m",
-                            ConcurrencyStamp = "33b1aeba-0055-45f6-ac29-7fa485f696da",
+                            ConcurrencyStamp = "ea206633-cb40-4181-a73c-5f634de0996d",
                             Name = "Membro",
                             NormalizedName = "MEMBRO"
                         },
                         new
                         {
                             Id = "f",
-                            ConcurrencyStamp = "99c27b50-fd65-45ca-9944-14b15a81e549",
+                            ConcurrencyStamp = "e6390f2e-fb2c-4e31-a5c7-a830babcf6fc",
                             Name = "Funcionario",
                             NormalizedName = "FUNCIONARIO"
                         },
                         new
                         {
                             Id = "g",
-                            ConcurrencyStamp = "b9219f56-0f8b-47c7-9326-31e9a5eaf48a",
+                            ConcurrencyStamp = "a54fc12b-560c-4244-b50d-a8bbdb9c0846",
                             Name = "Gestor",
                             NormalizedName = "GESTOR"
                         });
@@ -255,7 +255,6 @@ namespace Watch_List.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Ano")
-                        .HasMaxLength(4)
                         .HasColumnType("int");
 
                     b.Property<string>("Poster")

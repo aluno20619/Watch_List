@@ -71,6 +71,19 @@ namespace Watch_List.Controllers
 
             var filme = await _context.Filme
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            ViewData["ListaDePessoas"] = await (from f in _context.Filme
+                                                join pf in _context.PessoaFilme on f.Id equals pf.FilmeFK
+                                                join p in _context.Pessoa on pf.PessoaFK equals p.Id
+                                                where f.Id == id
+                                                select p).ToListAsync();
+
+            ViewData["ListaDeGeneros"] = await (from f in _context.Filme
+                                                join gf in _context.FilmeGenero on f.Id equals gf.FilmeFK
+                                                join g in _context.Genero on gf.GeneroFK equals g.Id
+                                                where f.Id == id
+                                                select g).ToListAsync();
+
             if (filme == null)
             {
                 return RedirectToAction("Index");
@@ -115,7 +128,7 @@ namespace Watch_List.Controllers
             {
                 // há ficheiro.
                 
-                if (foto.ContentType == "image/jpeg" || foto.ContentType == "image/png" || foto.ContentType == "image/jpg")
+                if (foto.ContentType == "image/jpeg" || foto.ContentType == "image/png" )
                 {
                     //existe imagem
 
@@ -128,7 +141,7 @@ namespace Watch_List.Controllers
                     
 
                     // Identificar o caminho onde o ficheiro vai ser guardado
-                    caminhoCompleto = Path.Combine(_caminho.WebRootPath, "Imagens", filme.Poster);
+                    caminhoCompleto = Path.Combine(_caminho.WebRootPath, "Imagens",nome);
                     // associar o nome da fotografia 
                     filme.Poster = nome;
                     // assinalar que existe imagem
@@ -157,7 +170,7 @@ namespace Watch_List.Controllers
                     // redireciona o utilizador para a View Index
                     return RedirectToAction(nameof(Index));
                     }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     ModelState.AddModelError("", "Ocorreu um erro...");
 

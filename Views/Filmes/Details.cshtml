@@ -35,22 +35,22 @@
         </tr>
     </table>
     <dl class="row">
-        @if (Model.ListaDeGeneros.Count == 0) { }
+        @if (ViewBag.ListaDeGeneros.Count == 0) { }
 
         else
         {
 
-            @foreach (var gen in Model.ListaDeGeneros)
+            @foreach (var gen in ViewBag.ListaDeGeneros)
             {
                 <dt class="col-sm-2" style="text-align:left;">
-                    @gen.Genero.Nome
+                    @gen.Nome
                 </dt>
             }
 
         }
     </dl>
         <dl class="row">
-            @if (Model.ListaDePessoas.Count == 0) { }
+           @if (ViewBag.ListaDePessoas.Count == 0) { }
 
             else
             {
@@ -58,13 +58,13 @@
                     Elenco
                 </dt>
 
-                @foreach (var pess in Model.ListaDePessoas)
+                @foreach (var pess in ViewBag.ListaDePessoas)
                 {
                     <dd class="col-sm-2" style="text-align:left;">
-                        <img src="~/Imagens/@pess.Pessoa.Foto"
+                        <img src="~/Imagens/@pess.Foto"
                              width="100"
-                             alt="@pess.Pessoa.Nome"
-                             title="@pess.Pessoa.Nome" />
+                             alt="@pess.Nome"
+                             title="@pess.Nome" />
             
                     </dd>
                 }

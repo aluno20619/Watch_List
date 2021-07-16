@@ -37,8 +37,18 @@ namespace Watch_List.Controllers
                 return NotFound();
             }
 
+
+
             var genero = await _context.Genero
+                
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            ViewData["ListaDeFilmes"] = await (from g in _context.Genero
+                                               join gf in _context.FilmeGenero on g.Id equals gf.GeneroFK
+                                               join f in _context.Filme on gf.FilmeFK equals f.Id
+                                               where g.Id == id
+                                               select f).ToListAsync();
+
             if (genero == null)
             {
                 return NotFound();

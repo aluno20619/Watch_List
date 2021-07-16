@@ -1,34 +1,32 @@
-﻿@model IEnumerable<Watch_List.Models.UtilFilme>
+﻿@model IEnumerable<Watch_List.Models.UtilizadoresFilmes>
 
  @{
-    ViewData["Title"]="Filmes do Utilzador" ;
+    ViewData["Title"]="Filmes do Utilizador" ;
 }
 
 <h1>@ViewData["Title"]</h1>
-@if (User.IsInRole("Gestor") || User.IsInRole("Funcionario"))
-{
+
 <p>
     <a asp-action="Create">Criar Novo</a>
 </p>
-}
+
 
 <table class="table">
     <thead>
         
         <tr>
-            @if (User.IsInRole("Gestor"))
-            {
+           
                 <th>
-                    @Html.DisplayNameFor(model => model.UtilIdFK)
+                    @Html.DisplayNameFor(model => model.Titulo)
                 </th>
-            }
+            
             <th>
 
-                @Html.DisplayNameFor(model => model.Filme)
+                @Html.DisplayNameFor(model => model.Ano)
             </th>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.Estado)
-            </th>*@
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -36,31 +34,29 @@
         @foreach (var item in Model)
         {
         <tr>
-            @if (User.IsInRole("Gestor"))
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.UtilIdFK)
-                </td>
-            }
+           
 
         <td>
-            <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Filme.Poster)"
+            <img src="~/Imagens/@Html.DisplayFor(modelItem => item.Poster)"
                  width="50"
-                 alt="@Html.DisplayFor(modelItem => item.Filme.Poster)"
-                 title="@Html.DisplayFor(modelItem => item.Filme.Poster)" />
+                 alt="@Html.DisplayFor(modelItem => item.Titulo)"
+                 title="@Html.DisplayFor(modelItem => item.Titulo)" />
             <br />
-            @Html.DisplayFor(modelItem => item.Filme.Titulo)
+            @Html.DisplayFor(modelItem => item.Titulo)
         </td>
-        @*<td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ano)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Estado)
-        </td>*@
+        </td>
         <td>
 
 
             <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
             <a asp-action="Delete" asp-route-id="@item.Id"> Apagar </a>
 
-            <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+            <a  asp-controller="Filmes" asp-action="Details" asp-route-id="@item.FilmeFK">Detalhes</a>
         </td>
         </tr>
         }

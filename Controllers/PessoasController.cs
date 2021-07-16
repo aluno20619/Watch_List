@@ -71,6 +71,15 @@ namespace Watch_List.Controllers
                 .Include(p => p.Profissoes)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
+            ViewData["ListaDeFilmes"] = await (from p in _context.Pessoa
+                                                join pf in _context.PessoaFilme on p.Id equals pf.PessoaFK
+                                                join f in _context.Filme on pf.FilmeFK equals f.Id
+                                               where p.Id == id
+                                                select f).ToListAsync();
+
+           
+
+
             //se nao houver pessoas
             if (pessoa == null)
             {
@@ -187,7 +196,7 @@ namespace Watch_List.Controllers
                     await imagem.CopyToAsync(stream);
                     return RedirectToAction(nameof(Index));
                 }   
-                catch (Exception ex)
+                catch (Exception)
                 {
                     ModelState.AddModelError("", "Ocorreu um erro...");
 
@@ -308,14 +317,14 @@ namespace Watch_List.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pessoa = await _context.Pessoa.FindAsync(id);
+            
 
             // Protege a eliminação de uma foto
-            try { 
-            
+            try {
+                var pessoa = await _context.Pessoa.FindAsync(id);
                 _context.Pessoa.Remove(pessoa);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                
 
                 //remover o ficheiro
 
@@ -334,7 +343,8 @@ namespace Watch_List.Controllers
 
                 throw;
             }
-            
+            return RedirectToAction(nameof(Index));
+
         }
 
         private bool PessoaExists(int id)
