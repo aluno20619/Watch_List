@@ -12,10 +12,10 @@
         <a asp-action="Create">Criar Novo</a>
     </p>
     <p>
-        <a asp-area="" asp-controller="FilmeGeneroes" asp-action="Create">Adicionar géneros a filmes</a>
+        <a asp-area="" asp-controller="FilmeGeneroes" asp-action="Index">Adicionar géneros a filmes</a>
     </p>
     <p>
-        <a asp-area="" asp-controller="PessoaFilmes" asp-action="Create">Adicionar pessoas ao filmes</a>
+        <a asp-area="" asp-controller="PessoaFilmes" asp-action="Index">Adicionar pessoas ao filmes</a>
     </p>
 }
 
@@ -61,6 +61,7 @@
 
                 <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>|
                 <a class="btn btn-primary" asp-controller="UtilFilmes" asp-action="Create">Adicionar à Lista</a>
+                
 
             </td>
            

@@ -9,20 +9,24 @@
 {
     <p>
         <a asp-action="Create">Criar Novo</a>
+
+    </p>
+    <p>
+        <a asp-area="" asp-controller="FilmesGeneroes" asp-action="Index">Adicionar a um filme</a>
     </p>
 }
-    <table class="table">
-        @*<thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Nome)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>*@
-        <tbody>
-            @foreach (var item in Model)
-            {
+<table class="table">
+    @*<thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                <th></th>
+            </tr>
+        </thead>*@
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nome)
@@ -39,6 +43,6 @@
 
                 </td>
             </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>

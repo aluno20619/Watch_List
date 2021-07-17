@@ -214,7 +214,7 @@ namespace Watch_List.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Funcionario,Gestor")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Ano,Resumo,Poster,Trailer")] Filme filme)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Ano,Resumo,Poster,Trailer")] Filme filme,IFormFile imagem)
         {
             if (id != filme.Id)
             {
@@ -222,25 +222,78 @@ namespace Watch_List.Controllers
             }
 
             // recuperar o ID do objeto enviado para o browser
-            var numIdFoto = HttpContext.Session.GetInt32("NumFotoEmEdicao");
+            var numIdFoto = HttpContext.Session.GetString("NumFotoEmEdicao");
 
-            // e compará-lo com o ID recebido
-            // se forem iguais, continuamos
-            // se forem diferentes, não fazemos a alteração
 
-            if (numIdFoto == null || numIdFoto != filme.Id)
-            {
-                //não houve problemas e redirecionamos para o index
-                return RedirectToAction("Index");
-            }
+
+            // var auxiliar
+            string caminhoCompleto = "";
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(filme);
-                    await _context.SaveChangesAsync();
-                }
+                    if (imagem == null)
+                    {
+                        filme.Poster = numIdFoto;
+                    }
+                    else
+                    {
+                        // há ficheiro. Mas, será um ficheiro válido?
+                        if (imagem.ContentType == "image/jpeg" || imagem.ContentType == "image/png" || imagem.ContentType == "image/jpg")
+                        {
+                            // definir o novo nome da fotografia     
+                            Guid g;
+                            g = Guid.NewGuid();
+
+                            //apagar a imagem anterior
+                            string localizacaoFicheiro = _caminho.WebRootPath;
+                            caminhoCompleto = Path.Combine(localizacaoFicheiro, "Imagens", numIdFoto);
+                            if (System.IO.File.Exists(caminhoCompleto))
+                            {
+                                System.IO.File.Delete(caminhoCompleto);
+                            }
+
+                            caminhoCompleto = g.ToString(); // determinar a extensão do nome da imagem
+
+                            string extensao = Path.GetExtension(imagem.FileName).ToLower();
+                            // caminho completo do ficheiro
+                            caminhoCompleto = caminhoCompleto + extensao;
+
+
+
+
+
+                            // associar este ficheiro aos dados ds foto
+                            filme.Poster = caminhoCompleto;
+
+                            // localização do armazenamento da imagem
+
+                            caminhoCompleto = Path.Combine(localizacaoFicheiro, "Imagens", caminhoCompleto);
+                        }
+                        else
+                        {
+                            // ficheiro não é válido
+                            // adicionar msg de erro
+                            ModelState.AddModelError("", "Só pode escolher uma imagem");
+                            // devolver o controlo à View
+
+                            var profissao = (from pr in _context.Profissao
+                                             join p in _context.Pessoa on pr.Id equals p.ProfissaoFK
+                                             select pr)
+                             .OrderBy(pr => pr.Tarefa);
+
+                            ViewData["ProFK"] = new SelectList(profissao, "Id", "Tarefa");
+                            return View(filme);
+                        }
+                        _context.Update(filme);
+                        await _context.SaveChangesAsync();
+                        // vou guardar, agora, no disco rígido do Servidor a imagem
+                        using var stream = new FileStream(caminhoCompleto, FileMode.Create);
+                        await imagem.CopyToAsync(stream);
+                        }
+                    }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!FilmeExists(filme.Id))
