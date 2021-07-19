@@ -10,8 +10,8 @@ using Watch_List.Data;
 namespace Watch_List.Data.Migrations
 {
     [DbContext(typeof(WatchListDbContext))]
-    [Migration("20210716173801_AlterDB")]
-    partial class AlterDB
+    [Migration("20210719095101_SeedDb")]
+    partial class SeedDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,21 +51,21 @@ namespace Watch_List.Data.Migrations
                         new
                         {
                             Id = "m",
-                            ConcurrencyStamp = "ea206633-cb40-4181-a73c-5f634de0996d",
+                            ConcurrencyStamp = "656135d5-02e5-4b9c-a6c4-e8dda30234ca",
                             Name = "Membro",
                             NormalizedName = "MEMBRO"
                         },
                         new
                         {
                             Id = "f",
-                            ConcurrencyStamp = "e6390f2e-fb2c-4e31-a5c7-a830babcf6fc",
+                            ConcurrencyStamp = "80c9a01c-00fe-4493-a928-eeb80ecf1797",
                             Name = "Funcionario",
                             NormalizedName = "FUNCIONARIO"
                         },
                         new
                         {
                             Id = "g",
-                            ConcurrencyStamp = "a54fc12b-560c-4244-b50d-a8bbdb9c0846",
+                            ConcurrencyStamp = "d402be27-1726-4985-a3e5-03d96e3af125",
                             Name = "Gestor",
                             NormalizedName = "GESTOR"
                         });
@@ -287,6 +287,33 @@ namespace Watch_List.Data.Migrations
                             Resumo = "Sophie encontra um feiticeiro chamado Howl a caminho de visitar a sua irmã Lettie. Ao regressar a casa, a Bruxa do Nada aparece e transforma a numa mulher de noventa anos de idade. Em busca de quebrar a maldição, Sophie sai de casa e parte para o campo para encontrar o castelo andante que pertence ao Howl.",
                             Titulo = "O Castelo Andante",
                             Trailer = "https://www.youtube.com/watch?v=iwROgK94zcM"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ano = 2002,
+                            Poster = "The_cat_returns.jpg",
+                            Resumo = " Haru Yoshioka é uma estudante de 17 anos,  um dia ao voltar a casa com a sua amiga Haru acaba por salvar a vida de um gato que estava prestes a ser atropelado por um caminhão. Porém, ele não é um gato qualquer, pois, ele fala e apresenta-se como Lune, o príncipe do reino dos gatos. Agora o felino tem uma dívida com Haru. Durante a noite, o próprio Rei dos Gatos convida a ir para o seu reino.",
+                            Titulo = "O Reino dos Gatos",
+                            Trailer = "https://www.youtube.com/watch?v=Gp-H_YOcYTM"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Ano = 2016,
+                            Poster = "deuses_do_egito.jpg",
+                            Resumo = "Num Egipto antigo alternativo onde os deuses vivem entre os mortais, o rei Osíris é morto pelo seu irmão ciumento Set durante a coroação do filho de Osíris, Horus. Set toma o trono e declara que a humanidade deve pagar riquezas para passar para a vida após a morte. Despojado dos seus olhos, Hórus é exilado, enquanto o Egipto é levado aos seus joelhos.",
+                            Titulo = "Deuses do Egito",
+                            Trailer = "https://www.youtube.com/watch?v=ycYiwQiHh4o"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Ano = 2009,
+                            Poster = "sherlock_holmes.jpg",
+                            Resumo = "Em 1890 Londres, o detective privado Sherlock Holmes e o seu parceiro Dr. John Watson impediram o assassinato ritualístico de uma mulher por Lord Henry Blackwood, que matou cinco outras mulheres jovens de forma semelhante. O inspector Lestrade e a polícia prendem Blackwood. Três meses mais tarde, Watson está noivo de Mary Morstan e muda-se do 221B Baker Street; enquanto ele desfruta das suas aventuras em conjunto, Watson espera não ter de lidar com as excentricidades de Holmes. Entretanto, Blackwood, que afirma ter poderes sobrenaturais, foi condenado à morte e pede para ver Holmes, avisando-o de mais três mortes imparáveis que irão causar grandes mudanças no mundo. Blackwood é subsequentemente enforcado.",
+                            Titulo = "Sherlock Holmes",
+                            Trailer = "https://www.youtube.com/watch?v=J7nJksXDBWc"
                         });
                 });
 

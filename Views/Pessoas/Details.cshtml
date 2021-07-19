@@ -7,12 +7,10 @@
 <h1>@ViewData["Title"]</h1>
 
 <div>
-    <h4>@Html.DisplayNameFor(model => model.Nome)</h4>
+    <h4>@Html.DisplayFor(model => model.Nome)</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Foto)
-        </dt>
+        
         <dd class="col-sm-10">
             <img src="~/Imagens/@Html.DisplayFor(modelItem => modelItem.Foto)"
                  width="500"
@@ -43,19 +41,14 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nacionalidade)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfissaoFK)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProfissaoFK)
+        </dd>
 
-        @if (Model.ListaDeProfissoes.Count == 0)
-        {}
-        else
-        {
-            @foreach (var prof in Model.ListaDeProfissoes)
-            {
-                <dt class="col-sm-2" style="text-align:left;">
-                    @prof.Tarefa
-                </dt>
-            }
 
-        }
         <dt class="col-sm-10">   <br /> </dt>
         @if (Model.ListaDeFilmes.Count == 0) { }
         else
@@ -66,7 +59,8 @@
                 <dt class="col-sm-10" style="text-align:center">
                     <img src="~/Imagens/@fil.Filme.Poster" title="@fil.Filme.Titulo" height="50" />
                     <br />
-                    
+                    @fil.Filme.Titulo
+
                 </dt>
             }
 

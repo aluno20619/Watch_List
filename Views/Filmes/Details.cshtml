@@ -39,7 +39,7 @@
 
         else
         {
-
+            <dt>Géneros:</dt>
             @foreach (var gen in ViewBag.ListaDeGeneros)
             {
                 <dt class="col-sm-2" style="text-align:left;">
@@ -51,11 +51,11 @@
     </dl>
         <dl class="row">
            @if (ViewBag.ListaDePessoas.Count == 0) { }
-
+           
             else
             {
                 <dt>
-                    Elenco
+                    Elenco: 
                 </dt>
 
                 @foreach (var pess in ViewBag.ListaDePessoas)
@@ -66,6 +66,9 @@
                              alt="@pess.Nome"
                              title="@pess.Nome" />
             
+                        <br />
+
+                        @pess.Nome
                     </dd>
                 }
 
