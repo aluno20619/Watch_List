@@ -8,7 +8,7 @@
 
 <div>
     
-    <h4>@Html.DisplayFor(model => model.Nome)</h4>
+    <h4>@Html.DisplayFor(modelItem => modelItem.Nome)</h4>
     <hr />
     <dl class="row">
         @if (Model.ListaDeFilmes.Count == 0) { }
@@ -26,7 +26,9 @@
              width="100"
              alt="@fil.Filme.Titulo"
              title="@fil.Filme.Titulo" />
-        
+        <br />
+        @fil.Filme.Titulo
+
     </dd>
             }
 
