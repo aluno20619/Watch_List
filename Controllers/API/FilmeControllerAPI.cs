@@ -49,18 +49,59 @@ namespace Watch_List.Controllers.API
         // PUT: api/FilmeControllerAPI/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFilme(int id, Filme filme)
+        public async Task<IActionResult> PutFilme(int id, [FromForm]Filme filme, IFormFile poster)
         {
             if (id != filme.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(filme).State = EntityState.Modified;
+            string caminhoCompleto = "";
+            var deprecatedFilme = await _context.Filme.FindAsync(id);
 
+            if (poster.FileName == "null")
+            {
+                filme.Poster = deprecatedFilme.Poster;
+            }
+            else
+            {
+
+                // definir o novo nome da fotografia     
+                Guid g;
+                g = Guid.NewGuid();
+
+                //apagar a imagem anterior
+                string localizacaoFicheiro = _path.WebRootPath;
+                    caminhoCompleto = Path.Combine(localizacaoFicheiro, "Imagens", deprecatedFilme.Poster);
+                if (System.IO.File.Exists(caminhoCompleto))
+                {
+                    System.IO.File.Delete(caminhoCompleto);
+                }
+
+                caminhoCompleto = g.ToString(); // determinar a extensão do nome da imagem
+
+                string extensao = Path.GetExtension(poster.FileName).ToLower();
+                // caminho completo do ficheiro
+                caminhoCompleto += extensao;
+
+                // associar este ficheiro aos dados ds foto
+                filme.Poster = caminhoCompleto;
+
+                // localização do armazenamento da imagem
+
+                caminhoCompleto = Path.Combine(localizacaoFicheiro, "Imagens", caminhoCompleto);
+            }
+            _context.Entry<Filme>(deprecatedFilme).State = EntityState.Detached;
             try
             {
+                _context.Entry(filme).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
+                if(poster.FileName != "null")
+                {
+                    using var stream = new FileStream(caminhoCompleto, FileMode.Create);
+                    await poster.CopyToAsync(stream);
+                }
+                
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,7 +121,7 @@ namespace Watch_List.Controllers.API
         // POST: api/FilmeControllerAPI
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Filme>> PostFilme([FromForm]Filme filme, IFormFile poster)
+        public async Task<ActionResult<Filme>> PostFilme([FromForm]Filme filme, IFormFile? poster)
         {
             string caminhoCompleto = "";
             bool haImagem = false;
@@ -147,6 +188,13 @@ namespace Watch_List.Controllers.API
             }
 
             _context.Filme.Remove(filme);
+            
+            var filmeGenero = await _context.FilmeGenero.Where(fg => fg.FilmeFK == id).ToListAsync();
+            var pessoaFilme = await _context.PessoaFilme.Where(pf => pf.FilmeFK == id).ToListAsync();
+
+            _context.FilmeGenero.RemoveRange(filmeGenero);
+            _context.PessoaFilme.RemoveRange(pessoaFilme);
+
             await _context.SaveChangesAsync();
 
             var localizacaoFicheiro = _path.WebRootPath;

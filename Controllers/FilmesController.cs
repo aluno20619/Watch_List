@@ -261,10 +261,6 @@ namespace Watch_List.Controllers
                             // caminho completo do ficheiro
                             caminhoCompleto = caminhoCompleto + extensao;
 
-
-
-
-
                             // associar este ficheiro aos dados ds foto
                             filme.Poster = caminhoCompleto;
 
